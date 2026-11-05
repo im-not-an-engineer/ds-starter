@@ -13,14 +13,15 @@ design/          이 시스템의 원천(조직이 소유) — 보편 기준에�
   reading.md       읽는 법 — 고르는 순서 · 어긋날 때
   tokens/          값 — 재질(primitive) · 계약(contract, 뜻 · 언제 · 쓰지 않을 때 · 짝) · 모드
   vocabulary.yaml  어휘 — 컴포넌트가 함께 쓰는 변형 이름(강도 · 크기 · 뜻 색 · 면의 세기)
-  components/ layout/   컴포넌트 — spec.yaml(계약) + style.css · behavior.js · 그림(HTML 참조 구현)
+  components/ layout/   컴포넌트 — spec.yaml(계약 · 원본 대조 상태) + style.css · behavior.js · 그림(HTML 참조 구현)
+  composites/      조립(큰 부품) — 원본에 되풀이되는 덩어리. 컴포넌트와 같은 형식 + parts
   grammar/         문법 — 구성 · 문구 · 상태 · 플랫폼
   judge/           판단 — 화면 유형(골격 포함) · 사실 · 갈림 · 업무
   layouts/         화면 유형의 HTML 골격
   rules/           늘 지킬 것(grade · check)
   images/          기준 화면 · 그림(see · learn)
   implementation.yaml  구현 대응표(계약 → 개발에서 쓰는 컴포넌트)
-work/ quality/   생성 시험 · 품질 루프 — 화면 HTML 은 늘 이 폴더 안에
+work/ quality/   생성 시험 · 원본 대조(calibration.yaml · reference/) · 품질 루프 — 화면 HTML 은 늘 이 폴더 안에
 decisions.md     결정 기록 — 무엇을 · 왜 · 누가
 kit/             스타터킷(도구 · 절차 · 보편 기준 원본 · 안내). 고치지 않는다 — 새 판이 나오면 통째로 바꾼다
 ```
@@ -49,12 +50,18 @@ kit/             스타터킷(도구 · 절차 · 보편 기준 원본 · 안내
 **디자이너가 결정을 맡기면**(「추천안으로」 「알아서 끝까지」) 묻지 않고 추천안을 고르되 decisions.md 에 「디자이너가 일괄 위임」 으로 따로 적고,
 검토 상태는 draft 로 둔다. 위임은 승인이 아니다. 끝 보고에 위임으로 정한 것을 모아 둔다.
 
-## 4. 생성은 따로, 지침만 보고
+## 4. 원본과 맞춘 뒤에 생성한다
+
+피그마 원본이 정답지다. 재료(컴포넌트 · 조립)는 **실제 렌더 캡처**를 원본 그림과 나란히 보고 맞추고(`npm run ds -- compare --component <ID>`),
+그다음 따로 도는 생성 세션이 기준 화면을 재현한 결과를 캡처 · 구조 대조 · 층별 진단해 원천을 고친다 — 둘 다 통과해야 새 요청 생성이 열린다(스킬 `ds-calibrate`).
+맞다고 말하기 전에 두 그림을 직접 열어 본다.
+
+## 5. 생성은 따로, 지침만 보고
 
 품질을 재는 화면 생성은 이 대화와 떨어진 생성 세션(서브에이전트)이 `npm run ds -- context` 가 만든 지침만 읽고 한다(스킬 `ds-generate`).
 생성 세션은 원천을 고치지 않는다. 그 세션이 남긴 「짐작한 것」 이 다음에 채울 구조다(스킬 `ds-loop`).
 
-## 5. 고친 뒤 · 끝 보고
+## 6. 고친 뒤 · 끝 보고
 
 ```bash
 npm run check      # build + 원천 검사(계약 · 값의 뜻 · 참조 · 골격 · 지도의 칸)
@@ -73,6 +80,7 @@ npm run status     # 작업 상태
 | 처음 · 무엇을 위한 시스템 · 대상 · 구현 방식 · 아이콘 수급 | `.claude/skills/ds-shape/SKILL.md` |
 | 피그마(또는 캡처)에서 들여오기 · 피그마 연결 | `.claude/skills/ds-figma/SKILL.md` |
 | 값 · 컴포넌트 · 문법 · 판단을 고치거나 더하기 | `.claude/skills/ds-edit/SKILL.md` |
+| 원본과 비교해 맞추기 — 재료 대조 · 화면 대조(관문) | `.claude/skills/ds-calibrate/SKILL.md` |
 | 디자이너 검토 · 승인 | `.claude/skills/ds-review/SKILL.md` |
 | 화면 만들어 보기 | `.claude/skills/ds-generate/SKILL.md` |
 | 생성 품질 올리기 | `.claude/skills/ds-loop/SKILL.md` |

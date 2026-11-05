@@ -11,4 +11,5 @@ slots:
   title: { class: ds-notice__title, optional: true, text: true }
   text: { class: ds-notice__text, text: true }
   action: { class: ds-notice__action, optional: true, note: '[[button]] -ghost -sm 하나' }
+calibration: { status: untested }
 review: { status: draft }

@@ -24,4 +24,5 @@ states:
 slots:
   icon: { class: ds-button__icon, optional: true, note: '글자 앞 아이콘 — [[icon]] 을 넣는다' }
 a11y: 버튼은 button 요소(옮겨 가면 a). 아이콘만이면 aria-label. 포커스 링을 지우지 않는다
+calibration: { status: untested }
 review: { status: draft }

@@ -14,4 +14,5 @@ slots:
   box: { class: ds-check__box, note: 'input type="checkbox"' }
   label: { class: ds-check__label, text: true }
 a11y: label 로 감싸 글자를 눌러도 켜지게
+calibration: { status: untested }
 review: { status: draft }

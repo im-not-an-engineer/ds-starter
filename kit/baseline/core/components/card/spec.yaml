@@ -16,4 +16,5 @@ slots:
   title: { class: ds-card__title, text: true }
   body: { class: ds-card__body }
   footer: { class: ds-card__footer, optional: true, note: 행동 — 오른쪽 맞춤 }
+calibration: { status: untested }
 review: { status: draft }

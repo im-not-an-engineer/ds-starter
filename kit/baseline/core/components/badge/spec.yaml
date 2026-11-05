@@ -9,4 +9,5 @@ props:
   tone: { vocab: tone, values: [neutral, info, success, warning, danger], default: neutral }
   emphasis: { vocab: emphasis, values: [subtle, solid, outline], default: subtle, note: solid 는 화면에 하나 — 가장 중요한 상태 }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

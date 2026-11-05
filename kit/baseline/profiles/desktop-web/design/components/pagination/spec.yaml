@@ -6,4 +6,5 @@ template: '<nav class="{class}" aria-label="쪽"{attrs}><button class="ds-pagina
 no-states: true
 slots:
   item: { class: ds-pagination__item }
+calibration: { status: untested }
 review: { status: draft }

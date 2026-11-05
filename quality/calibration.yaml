@@ -1,0 +1,7 @@
+# 화면 대조(관문) — 기준 화면마다 재현 · 대조 결과. 모두 passed 가 되어야 새 요청 생성이 열린다(작업 calibrate-screens, 스킬 ds-calibrate).
+#   image     기준 화면 ID(images.yaml 의 K-…)
+#   request   그 화면을 말로 설명한 요청(그림은 생성 세션에 주지 않는다)
+#   figma     원본 구조를 저장한 파일(get_metadata 결과) — 구조 대조에 쓴다
+#   rounds    회차마다 { date, structure: 맞음 %, layers: { 배치: 0~2, 큰 덩어리: …, 작은 컴포넌트: …, 간격: …, 글자: …, 색: …, 상태: …, 문구: … }, fixed: [고친 원천] }
+#   status    passed(구조 90% 이상 · 모든 층 2) · failing · todo
+screens: []

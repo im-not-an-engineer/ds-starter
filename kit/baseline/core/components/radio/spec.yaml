@@ -12,4 +12,5 @@ states:
 slots:
   dot: { class: ds-radio__dot, note: 'input type="radio"' }
   label: { class: ds-radio__label, text: true }
+calibration: { status: untested }
 review: { status: draft }

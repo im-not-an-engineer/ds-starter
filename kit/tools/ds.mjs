@@ -11,6 +11,8 @@
 //   ds map                           빈칸 지도 — 칸마다 채워진 정도와, 지금 생성하면 에이전트가 짐작할 곳
 //   ds context --session judge|draw [--ids A,B] [--out 파일]   생성 세션에 넘길 지침 묶음
 //   ds preview 화면.html [--viewport ID] [--image ID] [--mode dark] [--name 이름]   기기 틀에 입혀 기준 화면과 나란히
+//   ds capture <화면.html> | --component <ID>   실제 브라우저로 그려 PNG 로 → build/capture/
+//   ds compare <화면.html> --image <원본 그림 ID> [--figma <원본 구조 파일>] | --component <ID>   원본과 나란히 · 구조 대조 · 진단표 → build/compare/
 //   ds serve [--port 6107]           build/ 를 http://localhost 로
 //
 //   모든 명령에 --root <폴더> — 다른 폴더를 대상으로.
@@ -23,9 +25,11 @@ import { loadProject, byKind, loadFor, DsError, readYaml } from './lib/load.mjs'
 import { buildTokens, tokensCss, tokensMarkdown, cssName } from './lib/tokens.mjs';
 import { loadComponents, indexOf, checkComponent, checkContract, matrix, figmaSpec, reviewOf } from './lib/components.mjs';
 import { idIndex, refsIn, checkImages, checkRules, bodyOf, imagePath } from './lib/guidance.mjs';
-import { evaluate, setProgress } from './lib/progress.mjs';
+import { evaluate, setProgress, partsCalibration, screensCalibration } from './lib/progress.mjs';
 import { SETS, listIcons, addIcons, importIcons } from './lib/icons.mjs';
-import { outline } from './lib/figma.mjs';
+import { outline, instancesOf } from './lib/figma.mjs';
+import { capturePng } from './lib/capture.mjs';
+import { parseHtml, walk } from './lib/html.mjs';
 
 const KIT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const KIT_VERSION = existsSync(path.join(KIT, 'VERSION')) ? readFileSync(path.join(KIT, 'VERSION'), 'utf8').trim() : '0.0.0';
@@ -42,10 +46,10 @@ for (let i = 1; i < argv.length; i++) {
 }
 const root = path.resolve(flags.root ?? process.cwd());
 
-const COMMANDS = { status, progress, baseline, icons, figma, build, check, map: blankMap, context, preview, serve };
+const COMMANDS = { status, progress, baseline, icons, figma, capture, compare, build, check, map: blankMap, context, preview, serve };
 async function main() {
   if (COMMANDS[cmd]) return COMMANDS[cmd]();
-  console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).slice(0, 17).map((l) => l.slice(3)).join('\n'));
+  console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).slice(0, 19).map((l) => l.slice(3)).join('\n'));
   return cmd && cmd !== 'help' ? 1 : 0;
 }
 
@@ -103,10 +107,14 @@ function status() {
   console.log(`# 작업 상태 — ${config.title ?? config.name ?? ''} (스타터킷 ${KIT_VERSION})\n`);
   for (const t of tasks) {
     const tail = t.status === 'blocked' ? ` — 막힘: ${t.note ?? ''}${t.unblock ? ` → ${t.unblock}` : ''}` : t.waiting?.length && !['done', 'skipped'].includes(t.status) ? ` — 기다림: ${t.waiting.join(' · ')}` : t.note ? ` — ${t.note}` : '';
-    console.log(`${mark[t.status] ?? '○'} ${t.id.padEnd(15)} ${t.title}${tail}`);
+    console.log(`${mark[t.status] ?? '○'} ${t.id.padEnd(18)} ${t.title}${tail}`);
   }
   const ready = tasks.filter((t) => t.ready && !['done', 'skipped'].includes(t.status));
   console.log(`\n## 지금 할 수 있는 일\n${ready.length ? ready.map((t) => `- ${t.id} — ${t.title} (절차: ${t.skill})`).join('\n') : '- 없음'}`);
+  const pc = partsCalibration(designDir);
+  const sc = screensCalibration(root);
+  if (pc.total && pc.ok < pc.total) console.log(`\n## 재료 대조 — ${pc.ok}/${pc.total} 맞춤. 남은 것: ${pc.todo.slice(0, 12).join(' · ')}${pc.todo.length > 12 ? ' …' : ''}`);
+  if (sc.total && sc.passed < sc.total) console.log(`\n## 화면 대조 — ${sc.passed}/${sc.total} 통과. 남은 것: ${sc.failing.join(' · ')}`);
   if (pending.length) console.log(`\n## 피그마로 다시 볼 것 (figma-check: pending)\n${pending.map((p) => `- design/${p}`).join('\n')}`);
   if (required.length) console.log(`\n## 끝나야 「완료」 — ${required.map((t) => `${t.id}${t.unblock ? ` (${t.unblock})` : ''}`).join(' · ')}`);
   if (config.implementation?.approach == null || config.implementation?.approach === 'undecided') console.log('\n구현 방식: 미정 — 생성 · 미리보기는 HTML 참조 구현으로 진행한다');
@@ -351,6 +359,10 @@ function blankMap() {
   const judge = slotOf('judge');
   // 비어도 되는 묶음(optional — 업무처럼 제품을 들일 때 채우는 것)은 반쯤으로만 센다
   row(judge.length ? (judge.every((c) => c.items.length || c.optional) ? (judge.some((c) => c.optional && !c.items.length) ? 'half' : true) : 'half') : false, '판단', judge.length ? judge.map((c) => `${c.title ?? c.id} ${c.items.length}`).join(' · ') : '없음 (지도의 slot: judge)', '화면 구성(무엇을 어디에)을 요청마다 다르게 고른다');
+  const pc = partsCalibration(project.designDir);
+  row(lvl(pc.ok, pc.total), '재료 대조', `컴포넌트 · 조립 ${pc.total} 중 원본과 맞춘 것(matched · kept) ${pc.ok}`, '원본과 다른 모양의 재료로 화면을 짓는다 — 화면이 원본처럼 보이지 않는다');
+  const sc = screensCalibration(root);
+  row(lvl(sc.passed, sc.total), '화면 대조', sc.total ? `기준 화면 ${sc.total} 중 재현 통과 ${sc.passed}` : '아직 없음 (quality/calibration.yaml)', '규칙 · 골격 · 문법이 원본을 재현하는지 모른 채 새 화면을 만든다');
   row(g.rules.length ? true : false, '검사', `계약 검사 + 기계 검사가 붙은 항목 ${g.rules.length}`, '지침을 어겨도 아무도 모른다');
   L.push('', '## 묶음', '', '| 묶음 | 종류 · 칸 | 항목 | 초안 | 읽힘(판단/그리기) |', '|---|---|---|---|---|');
   for (const c of project.collections) {
@@ -460,6 +472,100 @@ function context() {
   const full = body + '\n---\n지침 전달 기록: ' + JSON.stringify(receipt) + '\n';
   if (flags.out) { mkdirSync(path.dirname(path.resolve(flags.out)), { recursive: true }); writeFileSync(path.resolve(flags.out), full); console.log(`${flags.out} — ${full.length.toLocaleString()}자 · 항목 ${receipt.included.length}`); }
   else process.stdout.write(full);
+  return 0;
+}
+
+// ── capture · compare — 실제 렌더를 원본과 맞댄다 ──
+const nameOf = (file) => String(flags.name ?? path.relative(root, path.resolve(file)).replace(/\.html?$/, '').replace(/^work[\/]/, '')).replace(/[\/]+/g, '-').replace(/[^\w가-힣.-]+/g, '_');
+function componentBody(c) {
+  const cells = matrix(c).map((m) => `<div class="cell"><small>${esc(m.caption)}</small>${m.html}</div>`).join('');
+  return `<div class="dskit" style="padding:24px;max-width:none"><p class="meta">${esc(c.title ?? c.id)} <code>${esc(c.class)}</code></p><div class="stage">${cells}</div>${c.examples ? `<div class="stage">${c.examples}</div>` : ''}</div>`;
+}
+function captureOf(g, { file, comp, vp, out }) {
+  const body = comp ? componentBody(comp) : bodyOf(readFileSync(path.resolve(file), 'utf8'));
+  const css = fullCss(g) + (comp ? CHROME : '');
+  return capturePng({ body, css, js: compsJs(g.comps), width: comp ? 1000 : vp.width, height: comp ? Number(flags.height ?? 700) : vp.height, out, mode: flags.mode, workDir: outDir(g.project, 'capture') });
+}
+function capture() {
+  const g = gather();
+  const vps = viewportsOf(g.project.config);
+  const vp = vps.find((v) => v.id === flags.viewport) ?? vps[0];
+  if (flags.component) {
+    const comp = g.comps.find((c) => c.id === flags.component);
+    if (!comp) throw new DsError(`컴포넌트 ${flags.component} 가 없습니다`);
+    const out = path.resolve(flags.out ?? path.join(outDir(g.project, 'capture'), `component-${comp.id}.png`));
+    console.log(`${path.relative(process.cwd(), captureOf(g, { comp, out }))} — 조합표 · 예시를 그린 그림`);
+    return 0;
+  }
+  const file = rest[0];
+  if (!file || !existsSync(path.resolve(file))) throw new DsError('캡처할 HTML 파일을 주세요(또는 --component <ID>)');
+  const out = path.resolve(flags.out ?? path.join(outDir(g.project, 'capture'), `${nameOf(file)}.png`));
+  console.log(`${path.relative(process.cwd(), captureOf(g, { file, vp, out }))} — ${vp.id} ${vp.width}×${vp.height}`);
+  return 0;
+}
+
+/** 원본 구조(피그마 인스턴스) ↔ 생성 화면의 컴포넌트. 피그마 이름은 spec 의 figma.name(하나 또는 목록) */
+function structureDiff(g, html, figmaFile) {
+  const figmaNames = (c) => [].concat(c.figma?.name ?? [], c.figma?.names ?? []).map((n) => String(n).toLowerCase());
+  const used = new Map();
+  for (const el of walk(parseHtml(html))) for (const k of el.classes) if (g.idx.root.has(k)) { const id = g.idx.root.get(k).id; used.set(id, (used.get(id) ?? 0) + 1); }
+  const inst = instancesOf(figmaFile);
+  const expected = new Map();
+  const unmapped = [];
+  for (const [name, n] of inst) {
+    const lower = name.toLowerCase();
+    const comp = g.comps.find((c) => figmaNames(c).some((f) => lower === f || lower.startsWith(f + '/') || lower.startsWith(f + ',') || lower.startsWith(f + ' ')));
+    if (comp) expected.set(comp.id, (expected.get(comp.id) ?? 0) + n);
+    else unmapped.push(`${name} ×${n}`);
+  }
+  const missing = [...expected.keys()].filter((id) => !used.has(id));
+  const extra = [...used.keys()].filter((id) => !expected.has(id) && !['stack', 'row', 'grid', 'text', 'page', 'divider'].includes(id));
+  const matched = [...expected.keys()].filter((id) => used.has(id));
+  return { matched, missing, extra, unmapped, score: expected.size + unmapped.length ? Math.round((matched.length / (expected.size + unmapped.length)) * 100) : null };
+}
+
+const LAYERS = ['배치 · 골격(영역의 자리 · 순서 · 폭)', '큰 덩어리(조립 — 카드 머리 · 요약 줄 · 단계 머리 …)', '작은 컴포넌트(모양 · 변형 · 상태)', '간격 · 정렬', '글자(단계 · 굵기 · 색)', '색 · 면 · 선', '상태(빈 · 오류 · 불러오는 중)', '문구'];
+function compare() {
+  const g = gather();
+  const vps = viewportsOf(g.project.config);
+  const vp = vps.find((v) => v.id === flags.viewport) ?? vps[0];
+  const images = byKind(g.project, 'images').flatMap((c) => c.items);
+  const dir = outDir(g.project, 'compare');
+  let ours; let refs = []; let name; let diff = null; let rows;
+  if (flags.component) {
+    const comp = g.comps.find((c) => c.id === flags.component);
+    if (!comp) throw new DsError(`컴포넌트 ${flags.component} 가 없습니다`);
+    name = `component-${comp.id}`;
+    ours = captureOf(g, { comp, out: path.join(dir, `${name}-ours.png`) });
+    refs = images.filter((i) => JSON.stringify(i.applies ?? '').includes(`[[${comp.id}]]`) || i.id === flags.image);
+    rows = [...comp.props.flatMap((p) => (p.kind === 'enum' ? p.values.map((v) => `${p.name}=${v}`) : [p.name])), ...comp.states.filter((s) => !s.interaction).map((s) => `상태 ${s.name}`), ...comp.slots.map((s) => `짜임 ${s.name}`)];
+  } else {
+    const file = rest[0];
+    if (!file || !existsSync(path.resolve(file))) throw new DsError('대조할 HTML 파일을 주세요(또는 --component <ID>)');
+    name = nameOf(file);
+    ours = captureOf(g, { file, vp, out: path.join(dir, `${name}-ours.png`) });
+    refs = images.filter((i) => i.id === flags.image);
+    if (flags.image && !refs.length) throw new DsError(`그림 ${flags.image} 가 없습니다`);
+    if (flags.figma) diff = structureDiff(g, readFileSync(path.resolve(file), 'utf8'), path.resolve(flags.figma));
+    rows = LAYERS;
+  }
+  if (!refs.length) console.log('△ 원본 그림이 없습니다 — 피그마에서 받아 images.yaml 에 넣고(kind · applies) --image 로 줍니다. 지금은 우리 렌더만 남깁니다');
+  const w = flags.component ? 1000 : vp.width;
+  const pane = (title, src) => `<div><p class="dskit-cap">${esc(title)}</p><div class="dskit-frame" style="width:${w}px"><img src="${src}" style="display:block;width:100%"></div></div>`;
+  writeFileSync(path.join(dir, `${name}.html`), `<!doctype html><html><head><meta charset="utf-8"><title>대조 — ${esc(name)}</title><style>${CHROME}</style></head><body class="dskit">
+<h1>대조 — ${esc(name)}</h1><p class="meta">왼쪽 원본 · 오른쪽 우리 렌더(실제 브라우저). 같은 폭으로 놓았다.</p>
+<div class="dskit-frames">${refs.map((r) => pane(`원본 ${r.id} — 배울 것: ${r.learn ?? ''}`, dataUri(imagePath(r)))).join('')}${pane('우리 렌더', dataUri(ours))}</div></body></html>`);
+  const L = [`# 대조 — ${name}`, '', `- 원본: ${refs.map((r) => `${r.id}(${path.relative(root, imagePath(r))})`).join(' · ') || '없음'}`, `- 우리 렌더: ${path.relative(root, ours)}`, `- 나란히 보기: build/compare/${name}.html`, ''];
+  if (diff) {
+    L.push('## 구조 대조 — 원본의 컴포넌트 인스턴스 ↔ 생성 화면', '', `- 맞음 ${diff.matched.length}${diff.score != null ? ` (${diff.score}%)` : ''}: ${diff.matched.join(' · ') || '—'}`,
+      `- **빠짐**(원본엔 있고 생성엔 없음): ${diff.missing.join(' · ') || '—'}`, `- 남음(생성에만): ${diff.extra.join(' · ') || '—'}`,
+      `- **대응 없음**(원본 인스턴스인데 어느 컴포넌트의 figma.name 에도 없음 — 새 컴포넌트 · 조립 후보이거나 대응을 적을 것): ${diff.unmapped.join(' · ') || '—'}`, '');
+  }
+  L.push('## 진단 — 항목마다 맞음 · 다름, 다르면 원인 층과 고칠 곳(생성 HTML 이 아니라 원천을 고친다)', '', '| 항목 | 맞음/다름 | 무엇이 다른가 | 원인 층(값 · 작은 컴포넌트 · 조립 · 골격 · 문법 · 규칙 · 그림) | 고칠 곳 |', '|---|---|---|---|---|', ...rows.map((r) => `| ${r} |  |  |  |  |`), '');
+  writeFileSync(path.join(dir, `${name}.md`), L.join('\n'));
+  console.log(`build/compare/${name}.html — 나란히 보기
+build/compare/${name}.md — 진단표(채운다)${diff ? `
+구조 대조: 맞음 ${diff.matched.length} · 빠짐 ${diff.missing.length} · 남음 ${diff.extra.length} · 대응 없음 ${diff.unmapped.length}` : ''}`);
   return 0;
 }
 

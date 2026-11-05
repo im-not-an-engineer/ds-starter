@@ -11,4 +11,5 @@ slots:
   th: { class: ds-table__th, modifiers: [{ class: -num, note: 숫자 열 — 오른쪽 정렬 }] }
   row: { class: ds-table__row, modifiers: [{ class: -interactive, note: 누르면 상세로 }] }
   td: { class: ds-table__td, modifiers: [{ class: -num, note: 숫자 칸 }] }
+calibration: { status: untested }
 review: { status: draft }

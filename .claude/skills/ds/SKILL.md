@@ -15,6 +15,7 @@ description: 디자인 시스템 스타터킷의 입구 — 작업 상태(npm ru
 |---|---|
 | shape · baseline · graphics 가 안 됨 · "처음이야" · "모바일인데" · "아이콘은?" | `ds-shape` |
 | figma-connect · keyscreens · values · components · figma-verify · 피그마 링크 · 캡처 | `ds-figma` |
+| calibrate-parts · calibrate-screens · "피그마처럼 안 나와" · "원본이랑 비교" | `ds-calibrate` |
 | grammar · judge · implementation · "이거 바꿔줘" | `ds-edit` |
 | review · "검토하자" · "승인할 거 보여줘" | `ds-review` |
 | generate · "화면 만들어 봐" | `ds-generate` |

@@ -1,0 +1,5 @@
+.ds-stat { display: flex; flex-direction: column; gap: var(--space-4); }
+.ds-stat__label { font-size: var(--text-caption-size); line-height: var(--text-caption-line); color: var(--color-fg-muted); }
+.ds-stat__value { font: var(--font-weight-bold) var(--text-title-1-size)/var(--text-title-1-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-stat.-hero .ds-stat__value { font-size: var(--text-display-size); line-height: var(--text-display-line); }
+.ds-stat__delta { font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); color: var(--color-fg-muted); }

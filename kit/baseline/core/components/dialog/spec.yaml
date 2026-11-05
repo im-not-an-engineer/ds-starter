@@ -13,4 +13,5 @@ slots:
   actions: { class: ds-dialog__actions, note: 오른쪽이 행동(진행), 왼쪽이 취소. 둘을 넘지 않는다 }
 behavior: 네이티브 dialog — data-dialog-open="<id>" 버튼이 연다, 바깥 · Esc 로 닫힘(behavior.js)
 a11y: dialog 요소(포커스가 안에 갇힌다). 제목을 aria-labelledby 로
+calibration: { status: untested }
 review: { status: draft }

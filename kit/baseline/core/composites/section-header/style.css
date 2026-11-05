@@ -1,0 +1,2 @@
+.ds-section-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); min-height: var(--size-control-sm); }
+.ds-section-header__lead { display: flex; align-items: baseline; gap: var(--space-6); min-width: 0; }

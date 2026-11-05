@@ -6,4 +6,5 @@ template: '<hr class="{class}"{attrs}>'
 props:
   thick: { type: boolean, class: -thick, note: 모바일 섹션 사이의 두꺼운 면 구분 }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

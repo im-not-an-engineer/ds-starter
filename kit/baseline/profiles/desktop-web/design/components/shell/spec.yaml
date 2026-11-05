@@ -11,4 +11,5 @@ slots:
   nav: { class: ds-shell__nav }
   item: { class: ds-shell__item, note: '메뉴 하나 — 아이콘 + 이름, 지금 화면은 aria-current="page"' }
   main: { class: ds-shell__main, note: '일하는 판 — [[page]] 를 넣는다' }
+calibration: { status: untested }
 review: { status: draft }

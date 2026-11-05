@@ -51,7 +51,7 @@ npm run ds -- figma outline work/figma/<페이지>.xml --depth 3 --type frame,in
 2. `style.css` 의 모양을 피그마에 맞게 고친다 — 값은 계약 이름으로만. 맞는 계약이 없으면 3으로 돌아가 계약을 더한다.
 3. 피그마의 변형(Variant) 이 기준 props 와 다르면: 같은 뜻이면 기준 이름을 쓰고 `figma.map` 에 피그마 이름을 적는다. 기준에 없는 변형이면 props 에 값을 더한다(어휘에 있는 이름으로 — 없으면 어휘를 늘릴지 디자이너에게).
 4. 피그마에 없는 상태(비활성 · 오류 · 처리 중)는 기준의 모양을 그대로 두고 「피그마에 없음 — 기준 유지」 를 decisions.md 에. 지우지 않는다.
-5. `figma: { name, node }` 를 spec 에. 이 시스템에서 쓰지 않는 기준 컴포넌트는 `review: { status: unused }`.
+5. `figma: { name, node }` 를 spec 에 — `name` 은 피그마 컴포넌트 이름(여럿이면 목록). 구조 대조가 이 이름으로 원본 인스턴스를 우리 컴포넌트에 잇는다. 이 시스템에서 쓰지 않는 기준 컴포넌트는 `review: { status: unused }`.
 
 피그마에만 있는 것:
 - 기준 컴포넌트를 늘어놓은 덩어리(카드 머리 · 요약 줄)면 새 컴포넌트가 아니라 **골격 · 예시**로 — 화면 유형의 골격이나 그 컴포넌트의 examples.html.
@@ -62,16 +62,11 @@ npm run ds -- figma outline work/figma/<페이지>.xml --depth 3 --type frame,in
 - 같은 무게의 덩어리를 나란히(두 칸 타일 · 숫자 카드)는 [[grid]](`ds-grid -cols-2`).
 - 아이콘은 `ds-shape` 의 4(아이콘 들이기).
 
-## 5. 다시 그려 맞대기
+## 5. 원본과 맞추기 — `ds-calibrate`
 
-컴포넌트 몇 개를 입힌 뒤 기준 화면 한 장을 컴포넌트로 다시 그린다 — `work/redraw/<기준 화면 ID>.html`(화면 유형의 골격에서 출발).
-
-```bash
-npm run ds -- check work/redraw/<ID>.html
-npm run ds -- preview work/redraw/<ID>.html --image <기준 화면 ID>
-```
-
-다르게 나오는 곳이 다음에 입힐 컴포넌트 · 고칠 문법이다. 다 맞으면 `progress components done`.
+모양을 입힌 뒤에는 **실제 렌더를 캡처해 원본과 나란히** 맞춘다 — 재료(컴포넌트 · 조립)부터, 그다음 기준 화면의 재현. 절차는 `ds-calibrate`.
+이 단계를 건너뛰면 재료가 원본과 어긋난 채로 남고, 그것으로 지은 화면은 원본처럼 보이지 않는다.
+원본에 되풀이되는 덩어리는 여기서 조립(`design/composites/`)으로 들인다.
 
 ## 6. 피그마로 다시 보기 (figma-verify)
 

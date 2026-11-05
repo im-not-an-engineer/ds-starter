@@ -1,0 +1,16 @@
+title: 숫자 요약
+summary: 이름표 · 큰 숫자 · 비교 한 줄 — 지금 상태를 숫자 하나로
+use: 현황 화면의 주인공 숫자, 나란한 요약 숫자들([[grid]] 안). 숫자가 화면에서 가장 중요하면 -hero
+avoid: 숫자 여러 개를 표처럼 나열하면 [[list]] 의 이름 ↔ 값
+parts: ['[[text]]', '[[badge]]']
+class: ds-stat
+template: '<div class="{class}"{attrs}><span class="ds-stat__label">이번 달 진행률</span><span class="ds-stat__value">72%</span><span class="ds-stat__delta">지난달보다 8% 높아요</span></div>'
+props:
+  hero: { type: boolean, class: -hero, note: '화면의 주인공 숫자 — 한 화면에 하나([[G-hierarchy]])' }
+no-states: true
+slots:
+  label: { class: ds-stat__label, text: true }
+  value: { class: ds-stat__value, text: true }
+  delta: { class: ds-stat__delta, optional: true, text: true, note: '비교 — 방향을 말로([[G-copy-numbers]])' }
+calibration: { status: untested }
+review: { status: draft }

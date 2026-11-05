@@ -13,4 +13,5 @@ slots:
   lead: { class: ds-app-bar__lead, optional: true, note: '뒤로 · 닫기 — [[button]] -ghost -icon-only' }
   title: { class: ds-app-bar__title, text: true }
   actions: { class: ds-app-bar__actions, optional: true }
+calibration: { status: untested }
 review: { status: draft }

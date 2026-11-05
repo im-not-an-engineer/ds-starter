@@ -10,4 +10,5 @@ props:
   wrap: { type: boolean, class: -wrap, note: 넘치면 다음 줄로 }
   equal: { type: boolean, class: -equal, note: 아이들이 폭을 똑같이 나눔 — 버튼 둘 반반 }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

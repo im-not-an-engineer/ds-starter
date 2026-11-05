@@ -10,4 +10,5 @@ no-states: true
 slots:
   bar: { class: ds-progress__bar, note: 'progress 요소 — value · max' }
   label: { class: ds-progress__label, optional: true, text: true }
+calibration: { status: untested }
 review: { status: draft }

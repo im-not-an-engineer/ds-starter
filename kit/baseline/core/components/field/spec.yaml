@@ -13,4 +13,5 @@ slots:
   hint: { class: ds-field__hint, optional: true, text: true, note: 넣는 법 · 형식 도움말 — 오류가 있으면 오류가 대신한다 }
   error: { class: ds-field__error, optional: true, text: true, note: '오류 문구 — 무엇이 틀렸고 어떻게 고치나([[G-copy-error]])' }
 a11y: label for ↔ 컨트롤 id. 오류는 aria-describedby 로 컨트롤에 잇는다
+calibration: { status: untested }
 review: { status: draft }

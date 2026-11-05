@@ -1,0 +1,12 @@
+title: 묶음 머리
+summary: 묶음의 제목 한 줄 — 왼쪽 제목(과 보조 글), 오른쪽 작은 행동 하나
+use: 목록 · 카드 묶음 바로 위. 「전체」 · 「편집」 같은 묶음의 행동은 오른쪽 -ghost -sm 하나([[G-actions-place]])
+avoid: 화면 제목은 화면 틀 · 상단 바의 제목. 행동이 둘 넘으면 묶음 아래로
+parts: ['[[text]]', '[[button]]', '[[row]]']
+class: ds-section-header
+template: '<div class="{class}"{attrs}><div class="ds-section-header__lead"><h2 class="ds-text -title-3">다음 할 일</h2><span class="ds-text -caption -tone-muted">3건</span></div><a class="ds-button -ghost -sm" href="#">전체</a></div>'
+no-states: true
+slots:
+  lead: { class: ds-section-header__lead, note: 제목과 보조 글(개수 · 기간) }
+calibration: { status: untested }
+review: { status: draft }

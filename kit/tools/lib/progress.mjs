@@ -2,7 +2,23 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
-import { readYaml, DsError } from './load.mjs';
+import { readYaml, DsError, glob } from './load.mjs';
+
+/** 재료 대조 — 컴포넌트 · 조립(배치 · 글자 묶음 layout 은 빼고)의 calibration 상태를 센다 */
+export function partsCalibration(designDir) {
+  const files = [...glob(designDir, 'components/*/spec.yaml'), ...glob(designDir, 'composites/*/spec.yaml')];
+  const rows = files.map((f) => { const s = readYaml(f); return { id: path.basename(path.dirname(f)), review: s.review?.status ?? s.review, status: s.calibration?.status ?? 'untested' }; })
+    .filter((r) => r.review !== 'unused');
+  const ok = rows.filter((r) => ['matched', 'kept'].includes(r.status));
+  return { total: rows.length, ok: ok.length, todo: rows.filter((r) => !['matched', 'kept'].includes(r.status)).map((r) => `${r.id}(${r.status})`) };
+}
+
+/** 화면 대조 — quality/calibration.yaml 의 기준 화면마다 passed 인가 */
+export function screensCalibration(root) {
+  const f = path.join(root, 'quality/calibration.yaml');
+  const screens = existsSync(f) ? readYaml(f).screens ?? [] : [];
+  return { total: screens.length, passed: screens.filter((s) => s.status === 'passed').length, failing: screens.filter((s) => s.status !== 'passed').map((s) => `${s.image ?? s.id}(${s.status ?? 'todo'})`) };
+}
 
 const STATUSES = ['todo', 'doing', 'blocked', 'done', 'skipped'];
 
@@ -46,6 +62,8 @@ export function evaluate({ root, kitDir, config, designDir }) {
   const auto = {
     shape: () => (config.description && config.profile ? 'done' : saved.shape?.status === 'doing' ? 'doing' : 'todo'),
     baseline: () => (existsSync(path.join(designDir, '.baseline.yaml')) ? 'done' : 'todo'),
+    'calibrate-parts': () => { const c = partsCalibration(designDir); return c.total && c.ok === c.total ? 'done' : c.ok ? 'doing' : 'todo'; },
+    'calibrate-screens': () => { const c = screensCalibration(root); return c.total && c.passed === c.total ? 'done' : c.total ? 'doing' : 'todo'; },
     graphics: () => (config.icons?.source && config.icons.source !== 'undecided' ? 'done' : 'todo'),
     'figma-verify': () => (pending.length ? 'todo' : saved['figma-connect']?.status === 'done' ? 'done' : 'todo'),
   };
@@ -73,7 +91,7 @@ export function setProgress(root, kitDir, id, status, note) {
   if (!tasks.some((t) => t.id === id)) throw new DsError(`작업 ${id} 가 없습니다 — ${tasks.map((t) => t.id).join(' · ')}`);
   if (!STATUSES.includes(status)) throw new DsError(`상태는 ${STATUSES.join(' · ')} 중 하나`);
   const task = tasks.find((t) => t.id === id);
-  const AUTO_HINT = { shape: 'ds.config.yaml 의 description 과 profile 을 채우면', baseline: 'npm run ds -- baseline 으로 기준을 깔면', graphics: 'ds.config.yaml 의 icons.source 를 정하면(own · lucide …)', 'figma-verify': 'figma-check: pending 이 없고 figma-connect 가 done 이면' };
+  const AUTO_HINT = { 'calibrate-parts': '컴포넌트 · 조립 spec 의 calibration.status 가 모두 matched 또는 kept 가 되면', 'calibrate-screens': 'quality/calibration.yaml 의 기준 화면이 모두 passed 가 되면', shape: 'ds.config.yaml 의 description 과 profile 을 채우면', baseline: 'npm run ds -- baseline 으로 기준을 깔면', graphics: 'ds.config.yaml 의 icons.source 를 정하면(own · lucide …)', 'figma-verify': 'figma-check: pending 이 없고 figma-connect 가 done 이면' };
   if (task.auto && ['done', 'todo', 'doing'].includes(status)) throw new DsError(`${id} 는 내용으로 판정하는 작업이라 상태를 적어도 바뀌지 않습니다 — ${AUTO_HINT[task.auto] ?? '내용을 채우면'} done 이 됩니다(막힘 · 건너뜀만 적을 수 있다)`);
   const p = readProgress(root);
   p[id] = { status, ...(note ? { note } : {}), date: new Date().toISOString().slice(0, 10) };

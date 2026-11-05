@@ -9,4 +9,5 @@ slots:
   art: { class: ds-empty__art, optional: true, note: '그림 하나 — [[illustration]] 을 넣는다' }
   title: { class: ds-empty__title, text: true, note: 무엇이 비었나 }
   text: { class: ds-empty__text, optional: true, text: true, note: 다음에 할 일 }
+calibration: { status: untested }
 review: { status: draft }

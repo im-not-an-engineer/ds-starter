@@ -104,6 +104,8 @@ export function checkComponent(c, { contract, idx, prefix, vocab }) {
   }
   if (!['draft', 'approved', 'unused'].includes(reviewOf(c).status)) err(`review.status 는 draft · approved · unused 중 하나`);
   if (reviewOf(c).status === 'unused') return out;
+  const cal = c.calibration?.status ?? 'untested';
+  if (!['matched', 'kept', 'differs', 'untested'].includes(cal)) err(`calibration.status 는 matched · kept · differs · untested 중 하나 (지금: ${cal})`);
   if (!c.css) err('style.css 가 없습니다');
   if (c.css) {
     const own = new Set(c.classes);

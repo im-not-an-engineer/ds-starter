@@ -13,4 +13,5 @@ slots:
   label: { class: ds-switch__label, text: true, note: 무엇을 켜나 — 글자가 앞, 스위치가 뒤 }
   control: { class: ds-switch__control, note: 'input type="checkbox" role="switch"' }
 a11y: role="switch". 켜짐 · 꺼짐을 색 말고도 손잡이 자리로 보인다
+calibration: { status: untested }
 review: { status: draft }

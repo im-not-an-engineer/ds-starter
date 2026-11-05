@@ -8,4 +8,5 @@ props:
   cols: { values: ['2', '3', '4'], default: '2', class: '-cols-{value}', note: 칸 수 }
   gap: { values: ['8', '12', '16'], default: '12', class: '-gap-{value}' }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

@@ -9,4 +9,5 @@ props:
   size: { vocab: size, values: [sm, md, lg], default: md, note: sm 48 · md 64 · lg 화면 폭의 절반 }
 no-states: true
 a11y: 뜻이 있으면 role="img" + aria-label, 장식이면 aria-hidden="true"
+calibration: { status: untested }
 review: { status: draft }

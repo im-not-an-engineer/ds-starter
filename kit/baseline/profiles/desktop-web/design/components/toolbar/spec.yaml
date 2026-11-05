@@ -8,4 +8,5 @@ no-states: true
 slots:
   start: { class: ds-toolbar__start }
   end: { class: ds-toolbar__end }
+calibration: { status: untested }
 review: { status: draft }

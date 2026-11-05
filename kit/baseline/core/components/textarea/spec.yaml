@@ -9,4 +9,5 @@ states:
   disabled: { attr: disabled }
   invalid: { attr: aria-invalid, value: 'true' }
   focus: { interaction: true }
+calibration: { status: untested }
 review: { status: draft }

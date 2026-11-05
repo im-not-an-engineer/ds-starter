@@ -14,4 +14,5 @@ states:
   readonly: { attr: readonly, note: 볼 수만 있음 — 옅은 면 }
   focus: { interaction: true }
 a11y: placeholder 를 이름표 대신 쓰지 않는다. type 을 맞춘다(email · number · search …)
+calibration: { status: untested }
 review: { status: draft }

@@ -10,4 +10,5 @@ slots:
   footer: { class: ds-page__footer, optional: true, note: 화면의 행동 — 주 행동은 오른쪽(나란히) 또는 아래(모바일 -block) }
 props:
   center: { type: boolean, class: -center, note: 본문을 가운데로 — 안내 · 완료 · 빈 화면 }
+calibration: { status: untested }
 review: { status: draft }

@@ -23,7 +23,8 @@ ds.config.yaml (무엇을 위한 · 대상 · 구현 방식) + 지침 지도(des
 |---|---|---|
 | 값 | `tokens/` — 재질 · 계약 · 모드, 갈래마다 고르는 법 | 계약 이름과 뜻 · 언제 · 쓰지 않을 때 · 짝. 컴포넌트 CSS 만 쓴다 — 생성 화면은 클래스로만 |
 | 어휘 | `vocabulary.yaml` | 강도 · 크기 · 뜻 색 · 면의 세기 — 모든 컴포넌트에서 같은 이름 |
-| 컴포넌트 | `components/` · `layout/` — spec.yaml + style.css · behavior.js | 클래스 · props(변형) · 상태(속성) · 짜임 · 언제 · 쓰지 않을 때 · 접근성. 동작은 HTML 참조 구현이 |
+| 컴포넌트 | `components/` · `layout/` — spec.yaml + style.css · behavior.js | 클래스 · props(변형) · 상태(속성) · 짜임 · 언제 · 쓰지 않을 때 · 접근성 · 원본 대조 상태. 동작은 HTML 참조 구현이 |
+| 조립 | `composites/` — 같은 형식 + parts | 원본에 되풀이되는 큰 덩어리 — 묶음 머리 · 숫자 요약 … |
 | 문법 | `grammar/` — 구성 · 문구 · 상태 · 플랫폼 | 위계 · 간격 리듬 · 정렬 · 밀도 · 강조 · 말투 · 표기 · 상태 처리 |
 | 판단 | `judge/` · `layouts/` — 화면 유형(골격 · 기준 화면 basis) · 사실 · 갈림 · 업무 | 무엇을 고르나와 출발할 HTML 골격 |
 | 규칙 | `rules/` | 늘 지킬 것 — grade(바꿀 수 있는 범위) · check |

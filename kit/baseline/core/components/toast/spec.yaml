@@ -11,4 +11,5 @@ slots:
   text: { class: ds-toast__text, text: true }
   action: { class: ds-toast__action, optional: true, note: 행동 하나 — 되돌리기 · 보기 }
 a11y: role="status"(오류는 role="alert")
+calibration: { status: untested }
 review: { status: draft }

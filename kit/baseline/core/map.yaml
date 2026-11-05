@@ -13,6 +13,10 @@
 #   require          항목마다 꼭 있어야 하는 칸 / fields — 쓸 수 있는 칸(모르는 칸 = 오타를 알린다)
 #   line             목록 한 줄의 모양 — "{title} — {use-when}"
 #
+# 컴포넌트 · 조립의 spec 에는 원본 대조 상태를 단다 — calibration: { status: matched | kept | differs | untested, ref: "[[F-…]]", date, note }.
+#   matched — 피그마 원본 그림과 우리 렌더(npm run ds -- compare --component <ID>)를 나란히 보고 맞춤.
+#   kept — 피그마에 없어 기준 모양을 이 시스템의 값으로 쓰기로 함(렌더를 보고 확인함). 빈칸 지도 · 작업 상태(calibrate-parts)가 센다.
+#
 # 항목 사이는 [[ID]] 로 가리킨다(YAML 의 [ ] · { } 안에서는 글을 따옴표로). guidance 항목에 check: 를 달면 생성 화면을 기계로 검사한다 —
 #   require-class · forbid-class · max-count: { 클래스: n } · require-attr, 조건 when-class · unless-class. 조건이 없으면 모든 화면에 걸린다.
 # 캡처로 진행해 피그마로 다시 볼 항목에는 figma-check: pending 을 단다 — 피그마가 연결되면 npm run ds -- status 가 모아 보여 준다.
@@ -42,6 +46,15 @@ collections:
     title: 배치 · 글자
     source: layout/*/spec.yaml
     what: 컴포넌트 사이의 간격 · 줄 맞춤 · 화면 틀 · 글자 단계. 생성 화면은 style 을 쓸 수 없으므로 자리 · 간격 · 글자 크기는 이것으로만 잡는다.
+    load: { judge: index, draw: always }
+
+  - id: composites
+    kind: components
+    title: 조립(큰 부품)
+    source: composites/*/spec.yaml
+    what: 원본 화면에 되풀이되는 덩어리 — 컴포넌트를 늘어놓은 것(묶음 머리 · 숫자 요약 · 단계 머리 …). 새 동작은 없다. 원본과 같은 덩어리는 이것으로 짓는다.
+    how: 컴포넌트와 같은 형식. parts 가 이 조립이 쓰는 컴포넌트다. 원본과 대조해 맞춘 것(calibration matched)을 먼저 쓴다.
+    require: [summary, use]
     load: { judge: index, draw: always }
 
   - id: composition

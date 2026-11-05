@@ -8,4 +8,5 @@ props:
   gap: { values: ['4', '8', '12', '16', '24', '32'], default: '12', class: '-gap-{value}', note: 사이 간격(px) }
   align: { values: [stretch, start, center], default: stretch, class: '-align-{value}' }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

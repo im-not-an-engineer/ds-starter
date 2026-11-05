@@ -9,4 +9,5 @@ no-states: true
 slots:
   image: { class: ds-avatar__image, optional: true, note: 'img — alt 에 이름' }
 a11y: 사진이면 img alt 에 이름, 장식이면 alt=""
+calibration: { status: untested }
 review: { status: draft }

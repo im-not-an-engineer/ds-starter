@@ -10,4 +10,5 @@ props:
   tone: { values: [default, muted, subtle, accent, danger, success], default: default, class: '-tone-{value}' }
   weight: { values: [regular, medium, semibold, bold], default: regular, class: '-w-{value}' }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

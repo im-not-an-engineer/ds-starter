@@ -12,4 +12,5 @@ slots:
   count: { class: ds-tabs__count, optional: true, note: 탭 이름 뒤 개수 }
 behavior: 누르면 같은 tablist 의 aria-selected 를 옮긴다(behavior.js)
 a11y: role=tablist · tab, 고른 것은 aria-selected="true"
+calibration: { status: untested }
 review: { status: draft }

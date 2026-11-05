@@ -8,4 +8,5 @@ props:
   shape: { values: [check, close, plus, search, chevron-right, chevron-down, info, alert, more, back], default: info, class: '-{value}', note: 모양 — 더하려면 SVG 파일을 이 폴더에 두고 변형을 하나 더한다 }
   size: { vocab: size, values: [sm, md, lg], default: md }
 no-states: true
+calibration: { status: untested }
 review: { status: draft }

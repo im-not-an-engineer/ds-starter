@@ -16,3 +16,14 @@ export function outline(file, { depth = 2, types } = {}) {
   }
   return rows;
 }
+
+/** 피그마 구조에서 컴포넌트 인스턴스 이름과 횟수 — 원본 화면에 쓰인 재료 목록 */
+export function instancesOf(file) {
+  const xml = readFileSync(file, 'utf8');
+  const counts = new Map();
+  for (const m of xml.matchAll(/<instance\b([^>]*)>/gi)) {
+    const name = m[1].match(/\bname="([^"]*)"/)?.[1];
+    if (name) counts.set(name, (counts.get(name) ?? 0) + 1);
+  }
+  return counts;
+}

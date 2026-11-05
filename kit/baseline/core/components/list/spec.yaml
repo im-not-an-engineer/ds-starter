@@ -18,4 +18,5 @@ slots:
   title: { class: ds-list__title, text: true }
   meta: { class: ds-list__meta, optional: true, text: true, note: 보조 한 줄 — 분류 · 시간 }
   end: { class: ds-list__end, optional: true, note: '뒤 — 값 · [[badge]] · [[switch]] · [[button]] -sm' }
+calibration: { status: untested }
 review: { status: draft }

@@ -12,4 +12,5 @@ states:
   invalid: { attr: aria-invalid, value: 'true' }
   focus: { interaction: true }
 behavior: 네이티브 select — 열고 고르기는 기기가 한다(모바일은 기기의 고르기 판)
+calibration: { status: untested }
 review: { status: draft }

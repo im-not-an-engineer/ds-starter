@@ -7,4 +7,5 @@ template: '<nav class="{class}"{attrs}><a class="ds-tab-bar__item" href="#" aria
 no-states: true
 slots:
   item: { class: ds-tab-bar__item, note: '탭 하나 — 지금 화면은 aria-current="page"' }
+calibration: { status: untested }
 review: { status: draft }

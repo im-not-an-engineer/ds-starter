@@ -10,4 +10,5 @@ slots:
   title: { class: ds-sheet__title, optional: true, text: true }
   body: { class: ds-sheet__body }
   footer: { class: ds-sheet__footer, optional: true, note: 적용 · 확인 버튼 }
+calibration: { status: untested }
 review: { status: draft }
