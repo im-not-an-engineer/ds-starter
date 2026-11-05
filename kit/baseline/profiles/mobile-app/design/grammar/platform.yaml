@@ -1,0 +1,19 @@
+# 모바일 앱의 문법 — 프로필이 더한다. 기준 화면을 들인 뒤 이 시스템의 값으로 고친다.
+grammar:
+  - id: G-mobile-nav
+    title: 내비게이션
+    rule: 앱의 주요 화면 3~5개는 하단 탭 바([[tab-bar]]). 그 밖은 화면을 쌓아 들어가고 [[app-bar]] 의 뒤로로 돌아온다. 아래에서 올라온 입력 화면은 닫기
+    grade: product
+    check: { when-class: ds-tab-bar, forbid-class: ds-app-bar__lead }
+  - id: G-mobile-thumb
+    title: 엄지가 닿는 아래
+    rule: 화면의 주 행동은 아래 고정 자리(ds-page__footer)에 -lg -block. 위쪽 상단 바에는 작은 보조 행동만
+    grade: product
+  - id: G-mobile-edges
+    title: 화면 가장자리와 눌림 자리
+    rule: 화면 가장자리 여백 16. 누르는 것은 높이 44 이상(size.touch). 줄 전체가 눌리면 줄 높이 44 이상
+    grade: fixed
+  - id: G-mobile-one-column
+    title: 한 줄로
+    rule: 내용은 한 줄(세로)로 쌓는다. 나란히 두 줄은 짧은 숫자 카드 둘까지
+    grade: product

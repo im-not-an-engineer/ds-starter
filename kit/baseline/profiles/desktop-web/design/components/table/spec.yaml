@@ -1,0 +1,14 @@
+title: 표
+summary: 여러 건을 열(이름 · 상태 · 날짜 …)로 나란히 비교하는 표
+use: 건이 많고 값을 열로 비교 · 정렬해야 할 때. 숫자 열은 오른쪽 정렬(-num). 누르면 상세로 가는 행은 -interactive
+avoid: 열이 둘 이하이거나 한 건씩 읽으면 [[list]]. 모바일 프로필에는 두지 않는다
+class: ds-table
+template: '<table class="{class}"{attrs}><thead><tr><th class="ds-table__th">이름</th><th class="ds-table__th">상태</th><th class="ds-table__th -num">금액</th></tr></thead><tbody><tr class="ds-table__row -interactive"><td class="ds-table__td">김민수</td><td class="ds-table__td"><span class="ds-badge -success">완료</span></td><td class="ds-table__td -num">9,000</td></tr></tbody></table>'
+props:
+  compact: { type: boolean, class: -compact, note: 행 높이를 줄임 — 건이 아주 많을 때 }
+no-states: true
+slots:
+  th: { class: ds-table__th, modifiers: [{ class: -num, note: 숫자 열 — 오른쪽 정렬 }] }
+  row: { class: ds-table__row, modifiers: [{ class: -interactive, note: 누르면 상세로 }] }
+  td: { class: ds-table__td, modifiers: [{ class: -num, note: 숫자 칸 }] }
+review: { status: draft }

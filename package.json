@@ -1,0 +1,19 @@
+{
+  "name": "my-design-system",
+  "private": true,
+  "version": "0.0.0",
+  "description": "LLM 이 화면을 만들 때 읽는 디자인 시스템 — 스타터킷에서 시작",
+  "type": "module",
+  "scripts": {
+    "ds": "node kit/tools/ds.mjs",
+    "status": "node kit/tools/ds.mjs status",
+    "check": "node kit/tools/ds.mjs build && node kit/tools/ds.mjs check",
+    "map": "node kit/tools/ds.mjs map"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

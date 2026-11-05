@@ -1,0 +1,6 @@
+title: 모바일 웹
+description: 휴대폰 브라우저에서 여는 웹. 모바일 앱의 기준에 브라우저(주소창 · 뒤로 가기 · 링크)를 더한다
+extends: mobile-app
+viewports:
+  - { id: phone, width: 390, height: 720 }
+  - { id: small, width: 360, height: 640 }

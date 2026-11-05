@@ -1,0 +1,13 @@
+.ds-icon { display: inline-block; flex: none; width: var(--size-icon-md); height: var(--size-icon-md); background: currentColor; mask: center / contain no-repeat; }
+.ds-icon.-sm { width: var(--size-icon-sm); height: var(--size-icon-sm); }
+.ds-icon.-lg { width: var(--size-icon-lg); height: var(--size-icon-lg); }
+.ds-icon.-check { mask-image: url("check.svg"); }
+.ds-icon.-close { mask-image: url("close.svg"); }
+.ds-icon.-plus { mask-image: url("plus.svg"); }
+.ds-icon.-search { mask-image: url("search.svg"); }
+.ds-icon.-chevron-right { mask-image: url("chevron-right.svg"); }
+.ds-icon.-chevron-down { mask-image: url("chevron-down.svg"); }
+.ds-icon.-info { mask-image: url("info.svg"); }
+.ds-icon.-alert { mask-image: url("alert.svg"); }
+.ds-icon.-more { mask-image: url("more.svg"); }
+.ds-icon.-back { mask-image: url("back.svg"); }

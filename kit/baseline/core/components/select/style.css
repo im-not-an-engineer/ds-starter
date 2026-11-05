@@ -1,0 +1,6 @@
+.ds-select { width: 100%; height: var(--size-control-md); padding: 0 calc(var(--space-12) + var(--size-icon-md)) 0 var(--space-12); border: var(--border-width-default) solid var(--color-border-default); border-radius: var(--radius-md); background: var(--color-surface-default) no-repeat right var(--space-12) center / var(--size-icon-sm) url("chevron.svg"); color: var(--color-fg-default); font: var(--text-body-1-size)/var(--text-body-1-line) var(--font-family-base); appearance: none; box-sizing: border-box; }
+.ds-select:focus { outline: none; border-color: var(--color-focus); box-shadow: 0 0 0 var(--border-width-default) var(--color-focus); }
+.ds-select.-sm { height: var(--size-control-sm); font-size: var(--text-body-2-size); }
+.ds-select.-lg { height: var(--size-control-lg); }
+.ds-select[aria-invalid="true"] { border-color: var(--color-status-danger-fg); }
+.ds-select:disabled { background-color: var(--color-bg-muted); color: var(--color-fg-disabled); }

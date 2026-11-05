@@ -1,0 +1,147 @@
+# 지침 지도 — 에이전트가 이 디자인 시스템에서 무엇을 · 언제 · 어떻게 읽는지. 도구(ds)는 이 지도만 보고 읽고 · 묶고 · 검사한다.
+# 보편 기준으로 깔린 지도다. 묶음을 더하거나 빼도 되고, 칸을 늘려도 된다 — 도구는 그대로다.
+#
+# 묶음(collections)의 칸
+#   id · title       묶음 ID · 사람이 읽는 이름
+#   kind             도구가 아는 종류 넷 — tokens(값) · components(컴포넌트) · images(그림) · guidance(문법 · 판단 · 규칙 … 그 밖의 지침)
+#   slot             빈칸 지도의 어느 칸인가 — grammar(문법) · judge(판단) · rules(규칙). guidance 묶음에 단다
+#   source           원천 — 'a.yaml#key'(YAML 의 목록) · 'dir/*.yaml'(파일 하나 = 항목 하나) · 'dir/*/spec.yaml'(폴더 하나 = 컴포넌트 하나) ·
+#                    'a.md'('## <ID> <제목>' 하나 = 항목 하나). 경로는 이 폴더 기준
+#   what · how       무엇인가 · 항목의 칸을 어떻게 읽나 — 에이전트가 이 글을 읽는다
+#   load             always(본문까지 늘) · index(목록만, 본문은 ID 로) · on-demand(ID 로 부를 때만) ·
+#                    related(고른 항목이 [[ID]] 나 클래스 이름으로 가리키는 것만 본문) — 세션마다 다르면 { judge: …, draw: … }
+#   require          항목마다 꼭 있어야 하는 칸 / fields — 쓸 수 있는 칸(모르는 칸 = 오타를 알린다)
+#   line             목록 한 줄의 모양 — "{title} — {use-when}"
+#
+# 항목 사이는 [[ID]] 로 가리킨다(YAML 의 [ ] · { } 안에서는 글을 따옴표로). guidance 항목에 check: 를 달면 생성 화면을 기계로 검사한다 —
+#   require-class · forbid-class · max-count: { 클래스: n } · require-attr, 조건 when-class · unless-class. 조건이 없으면 모든 화면에 걸린다.
+# 캡처로 진행해 피그마로 다시 볼 항목에는 figma-check: pending 을 단다 — 피그마가 연결되면 npm run ds -- status 가 모아 보여 준다.
+
+reading: reading.md
+vocabulary: vocabulary.yaml
+
+collections:
+  - id: tokens
+    kind: tokens
+    title: 값
+    source: tokens/*.yaml
+    what: 색 · 간격 · 크기 · 모서리 · 글자의 계약. 컴포넌트 CSS 가 쓰는 이름이다. 화면을 그리는 세션은 값을 직접 쓰지 않는다(클래스가 갖고 있다).
+    load: on-demand
+
+  - id: components
+    kind: components
+    title: 컴포넌트
+    source: components/*/spec.yaml
+    what: 화면을 짓는 재료. 클래스 · 변형(props) · 상태(속성) · 짜임 · 언제 쓰나. 동작과 접근성은 HTML 참조 구현이 갖고 있다.
+    how: use 로 고르고 avoid 로 헷갈리는 이웃과 가른다. 변형은 적힌 것만, 상태는 속성으로.
+    require: [summary, use]
+    load: { judge: index, draw: always }
+
+  - id: layout
+    kind: components
+    title: 배치 · 글자
+    source: layout/*/spec.yaml
+    what: 컴포넌트 사이의 간격 · 줄 맞춤 · 화면 틀 · 글자 단계. 생성 화면은 style 을 쓸 수 없으므로 자리 · 간격 · 글자 크기는 이것으로만 잡는다.
+    load: { judge: index, draw: always }
+
+  - id: composition
+    kind: guidance
+    slot: grammar
+    title: 구성 문법
+    source: grammar/composition.yaml#grammar
+    what: 위계 · 간격 리듬 · 정렬 · 밀도 · 강조 — 어느 화면에서든 따르는 구성의 약속.
+    how: rule 을 지키고, why 로 판단이 갈릴 때의 기준을 삼는다. do · dont 는 예시다. check 가 있으면 도구가 검사한다.
+    fields: [title, rule, why, do, dont, check, severity, grade, applies]
+    require: [rule]
+    load: { judge: index, draw: always }
+
+  - id: copy
+    kind: guidance
+    slot: grammar
+    title: 문구 · 표기
+    source: grammar/copy.yaml#grammar
+    what: 말투 · 버튼 이름 · 숫자 · 날짜 · 단위 · 빈 상태와 오류의 글.
+    fields: [title, rule, why, do, dont, check, severity, grade, applies]
+    require: [rule]
+    load: { judge: index, draw: always }
+
+  - id: states
+    kind: guidance
+    slot: grammar
+    title: 상태 처리
+    source: grammar/states.yaml#grammar
+    what: 비어 있음 · 불러오는 중 · 오류 · 권한 없음 · 비활성을 어떻게 보여 주나.
+    fields: [title, rule, why, do, dont, check, severity, grade, applies]
+    require: [rule]
+    load: { judge: always, draw: always }
+
+  - id: screen-types
+    kind: guidance
+    slot: judge
+    title: 화면 유형
+    source: judge/screen-types.yaml#screenTypes
+    what: 화면 한 장이 하는 일의 종류. 사용자의 주된 일로 하나를 고른다. 맞는 것이 없으면 P-free.
+    how: |
+      job(주된 일) · fits(이럴 때) · avoid(이럴 땐 아니다)로 고른다. needs-facts 의 사실을 먼저 확인한다(모르면 그 사실의 if-unknown).
+      고른 뒤 template(HTML 골격)을 출발점으로 regions 를 채우고, states 를 모두 그린다.
+    line: "{title} — {job}"
+    fields: [title, job, fits, avoid, needs-facts, template, regions, states, primary-action, note]
+    require: [job, fits, template, states]
+    load: { judge: always, draw: on-demand }
+
+  - id: facts
+    kind: guidance
+    slot: judge
+    title: 사실 — 고르기 전에 물을 것
+    source: judge/facts.yaml#facts
+    what: 화면을 고르고 채우기 전에 확인할 사실. 요청에 없으면 묻거나, 물을 수 없으면 if-unknown 대로 가정하고 「확인 필요」 에 적는다.
+    fields: [title, ask, type, values, if-unknown, affects]
+    require: [ask, if-unknown]
+    load: { judge: always, draw: on-demand }
+
+  - id: choices
+    kind: guidance
+    slot: judge
+    title: 갈림 — 헷갈리는 둘을 가르는 기준
+    source: judge/choices.yaml#choices
+    what: 비슷한 컴포넌트 · 패턴 사이에서 무엇을 고르나.
+    fields: [title, between, pick]
+    require: [between, pick]
+    load: { judge: always, draw: always }
+
+  - id: tasks
+    kind: guidance
+    slot: judge
+    title: 업무
+    source: judge/tasks.yaml#tasks
+    what: 이 제품의 일 — 단계 · 화면 제목 · 고정된 말(앱 이름 · 단계 이름). 제품을 들일 때 채운다. 비어 있으면 화면의 사실을 짐작한다.
+    fields: [title, use-when, steps, words, screen-types, note]
+    optional: true
+    load: { judge: always, draw: on-demand }
+
+  - id: platform
+    kind: guidance
+    slot: grammar
+    title: 대상 플랫폼의 문법
+    source: grammar/platform.yaml#grammar
+    what: 프로필(모바일 앱 · 모바일 웹 · 데스크톱 웹)이 더하는 문법 — 내비게이션 · 화면 가장자리 · 손가락 · 키보드.
+    fields: [title, rule, why, do, dont, check, severity, grade, applies]
+    optional: true
+    load: { judge: always, draw: always }
+
+  - id: rules
+    kind: guidance
+    slot: rules
+    title: 늘 지킬 것
+    source: rules/*.yaml#rules
+    what: 어느 화면에서든 지키는 규칙. grade 는 요청으로 바꿀 수 있는 범위 — fixed(바꾸지 않음) · product(제품 전체로만) · screen(그 화면만, data-deviation 표시).
+    fields: [title, rule, why, severity, grade, check]
+    require: [rule, grade]
+    load: always
+
+  - id: images
+    kind: images
+    title: 그림
+    source: images/images.yaml#images
+    what: 기준 화면(키스크린) · 컴포넌트 그림. 이 시스템의 모양 · 밀도 · 분위기. 「배울 것」 만 따른다.
+    load: { judge: always, draw: always }

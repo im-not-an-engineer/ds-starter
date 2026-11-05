@@ -1,0 +1,7 @@
+rules:
+  - id: R-desktop-frame
+    title: 앱 틀 안에
+    rule: 메뉴가 필요한 화면은 [[shell]] 안에 둔다(안내 · 로그인은 예외)
+    severity: warn
+    grade: product
+    check: { when-class: ds-page, unless-class: -center, require-class: ds-shell }

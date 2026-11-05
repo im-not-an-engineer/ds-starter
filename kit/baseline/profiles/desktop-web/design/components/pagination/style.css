@@ -1,0 +1,4 @@
+.ds-pagination { display: flex; justify-content: center; gap: var(--space-4); padding: var(--space-12) 0; }
+.ds-pagination__item { min-width: var(--size-control-sm); height: var(--size-control-sm); border: 0; border-radius: var(--radius-md); background: none; color: var(--color-fg-muted); font: var(--text-body-2-size)/1 var(--font-family-base); cursor: pointer; }
+.ds-pagination__item:hover { background: var(--color-surface-hover); }
+.ds-pagination__item[aria-current="page"] { background: var(--color-surface-selected); color: var(--color-accent-fg); font-weight: var(--font-weight-semibold); }

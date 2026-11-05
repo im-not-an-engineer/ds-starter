@@ -1,0 +1,5 @@
+title: 데스크톱 웹
+description: 넓은 화면의 웹 서비스 · 관리 도구. 사이드바 · 판(패널) · 표 · 마우스와 키보드
+viewports:
+  - { id: wide, width: 1440, height: 900 }
+  - { id: laptop, width: 1280, height: 800 }

@@ -1,0 +1,16 @@
+title: 입력 묶음
+summary: 이름표 · 입력 컨트롤 · 도움말 · 오류 문구를 한 덩어리로
+use:
+  - 값을 넣는 모든 컨트롤([[input]] · [[textarea]] · [[select]])은 이 묶음 안에 — 이름표가 늘 보이게
+  - 오류는 컨트롤의 aria-invalid 와 이 묶음의 __error 를 함께
+avoid: 체크 · 라디오 · 스위치 하나는 자기 글자를 갖는다 — 여러 개를 묶는 제목이 필요할 때만 이 묶음
+class: ds-field
+template: '<div class="{class}"{attrs}><label class="ds-field__label" for="f1">이메일</label><input id="f1" class="ds-input" placeholder="name@example.com"><p class="ds-field__hint">회사 메일로 적어요</p></div>'
+no-states: true
+slots:
+  label: { class: ds-field__label, text: true, note: 무엇을 넣나 — 짧은 명사. label 요소의 for 로 컨트롤과 잇는다 }
+  required: { class: ds-field__required, optional: true, note: 꼭 넣어야 하면 이름표 옆 표시 }
+  hint: { class: ds-field__hint, optional: true, text: true, note: 넣는 법 · 형식 도움말 — 오류가 있으면 오류가 대신한다 }
+  error: { class: ds-field__error, optional: true, text: true, note: '오류 문구 — 무엇이 틀렸고 어떻게 고치나([[G-copy-error]])' }
+a11y: label for ↔ 컨트롤 id. 오류는 aria-describedby 로 컨트롤에 잇는다
+review: { status: draft }

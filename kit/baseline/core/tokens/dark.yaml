@@ -1,0 +1,10 @@
+# 다크 모드 — 계약 값만 덮는다. 피그마에 다크가 없으면 이 파일을 지우거나 그대로 둔다(쓰지 않으면 영향 없음).
+layer: contract
+mode: dark
+tokens:
+  color:
+    bg: { canvas: '{gray.950}', subtle: '{gray.900}', muted: '{gray.800}' }
+    surface: { default: '{gray.900}', raised: '{gray.800}', hover: '{gray.800}', pressed: '{gray.700}', selected: '{blue.700}' }
+    fg: { default: '{gray.50}', muted: '{gray.300}', subtle: '{gray.500}', disabled: '{gray.600}', link: '{blue.400}' }
+    border: { default: '{gray.700}', strong: '{gray.500}', subtle: '{gray.800}' }
+    accent: { subtle: '{gray.800}', fg: '{blue.400}' }

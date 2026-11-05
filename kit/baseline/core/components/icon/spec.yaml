@@ -1,0 +1,11 @@
+title: 아이콘
+summary: 선 아이콘 하나. 모양은 변형으로, 색은 둘러싼 글자색을 따른다
+use: 버튼 · 목록 앞 · 상단 바 행동. 뜻이 분명한 것만 — 글자 없이 쓰면 aria-label
+avoid: 여러 색 그림 · 일러스트는 그림 부품(파일)으로
+class: ds-icon
+template: '<span class="{class}" aria-hidden="true"{attrs}></span>'
+props:
+  shape: { values: [check, close, plus, search, chevron-right, chevron-down, info, alert, more, back], default: info, class: '-{value}', note: 모양 — 더하려면 SVG 파일을 이 폴더에 두고 변형을 하나 더한다 }
+  size: { vocab: size, values: [sm, md, lg], default: md }
+no-states: true
+review: { status: draft }

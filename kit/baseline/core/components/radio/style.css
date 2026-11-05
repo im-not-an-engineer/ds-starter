@@ -1,0 +1,6 @@
+.ds-radio { display: inline-flex; align-items: center; gap: var(--space-8); min-height: var(--size-control-sm); cursor: pointer; font: var(--text-body-1-size)/var(--text-body-1-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-radio__dot { appearance: none; flex: none; width: var(--size-icon-md); height: var(--size-icon-md); margin: 0; border: var(--border-width-default) solid var(--color-border-strong); border-radius: var(--radius-full); background: var(--color-surface-default); cursor: pointer; }
+.ds-radio__dot:checked { border: calc(var(--size-icon-md) / 3.5) solid var(--color-accent-solid); }
+.ds-radio__dot:focus-visible { outline: var(--border-width-strong) solid var(--color-focus); outline-offset: var(--space-2); }
+.ds-radio__dot:disabled { background: var(--color-bg-muted); border-color: var(--color-bg-muted); }
+.ds-radio:has(:disabled) { color: var(--color-fg-disabled); cursor: not-allowed; }

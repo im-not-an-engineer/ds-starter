@@ -1,0 +1,26 @@
+# 모바일 웹의 문법 — 모바일 앱의 기준에 브라우저를 더한다.
+grammar:
+  - id: G-mobile-nav
+    title: 내비게이션
+    rule: 주요 화면 3~5개는 하단 탭 바([[tab-bar]]) 또는 상단 바의 메뉴. 그 밖은 링크로 들어가고 브라우저 · 상단 바의 뒤로로 돌아온다
+    grade: product
+  - id: G-mobile-thumb
+    title: 엄지가 닿는 아래
+    rule: 화면의 주 행동은 아래 고정 자리(ds-page__footer)에 -lg -block. 브라우저 아래 막대에 가리지 않게 여백을 둔다
+    grade: product
+  - id: G-mobile-edges
+    title: 화면 가장자리와 눌림 자리
+    rule: 화면 가장자리 여백 16. 누르는 것은 높이 44 이상(size.touch)
+    grade: fixed
+  - id: G-mobile-one-column
+    title: 한 줄로
+    rule: 내용은 한 줄(세로)로 쌓는다. 나란히 두 줄은 짧은 숫자 카드 둘까지
+    grade: product
+  - id: G-web-links
+    title: 옮겨 가는 것은 링크
+    rule: 다른 화면으로 옮겨 가는 것은 a(주소가 생긴다 — 공유 · 새로고침 · 뒤로 가기). 이 자리의 행동만 button
+    grade: fixed
+  - id: G-web-viewport
+    title: 브라우저 높이
+    rule: 화면 높이는 주소창이 줄었다 늘었다 한다 — 아래 고정 자리 외에 화면 높이에 맞춰 늘이는 배치를 하지 않는다
+    grade: product

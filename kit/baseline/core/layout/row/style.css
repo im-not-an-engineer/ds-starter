@@ -1,0 +1,8 @@
+.ds-row { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
+.ds-row.-gap-4 { gap: var(--space-4); }
+.ds-row.-gap-8 { gap: var(--space-8); }
+.ds-row.-gap-12 { gap: var(--space-12); }
+.ds-row.-gap-16 { gap: var(--space-16); }
+.ds-row.-between { justify-content: space-between; }
+.ds-row.-wrap { flex-wrap: wrap; }
+.ds-row.-equal > * { flex: 1; min-width: 0; }

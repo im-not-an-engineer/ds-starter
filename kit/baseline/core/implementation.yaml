@@ -1,0 +1,11 @@
+# 구현 대응표 — 컴포넌트 계약(spec)을 개발에서 무엇으로 쓰나. ds.config.yaml 의 implementation.approach 를 정한 뒤 채운다(작업 implementation).
+# 생성 · 미리보기는 늘 HTML 참조 구현(ds-…)으로 한다. 이 표는 생성된 HTML 시안을 개발이 옮길 때의 기준이다.
+#
+#   <컴포넌트 ID>:
+#     target   그 구현의 컴포넌트(예: shadcn 의 Button, MUI 의 Button, Ionic 의 ion-button, 조직 코드의 <AxButton>)
+#     props    계약의 props 값 → 그 구현의 prop (예: { intent.primary: 'variant="default"', size.sm: 'size="sm"' })
+#     states   계약의 상태 → 그 구현의 prop (예: { loading: 'loading' })
+#     gap      그 구현에 없거나 다른 것 — 개발이 채우거나 디자이너가 정할 것
+#
+# approach 가 html 이면 참조 구현 그대로라 이 표가 필요 없다. undecided 면 비워 둔다.
+mapping: {}

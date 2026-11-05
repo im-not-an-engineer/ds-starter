@@ -1,0 +1,37 @@
+# 늘 지킬 것 — 어느 화면에서든. grade: fixed(요청으로 바꾸지 않음) · product(제품 전체로만 바꿈) · screen(그 화면만, data-deviation="ID" 표시).
+# check 는 모든 화면에 걸린다 — 일부 화면에만 걸려면 when-class · unless-class.
+rules:
+  - id: R-one-primary
+    title: 주 행동은 하나
+    rule: 한 화면(상태 하나)에 -primary 버튼은 하나
+    why: 주 행동이 둘이면 사용자는 무엇을 해야 할지 고민한다
+    severity: error
+    grade: product
+    check: { max-count: { -primary: 1 } }
+  - id: R-confirm-irreversible
+    title: 되돌릴 수 없는 행동은 확인
+    rule: 지우기 · 보내기 · 나가기(작성 중)처럼 되돌릴 수 없는 행동은 누른 뒤 [[dialog]] 로 확인하거나, 실행 뒤 토스트의 「되돌리기」 를 준다
+    severity: error
+    grade: fixed
+  - id: R-labelled-inputs
+    title: 입력에는 이름표
+    rule: 값을 넣는 칸은 보이는 이름표를 갖는다([[field]]). 자리 표시(placeholder)는 이름표가 아니다 — 검색 칸만 예외
+    severity: error
+    grade: fixed
+    check: { when-class: ds-input, require-class: ds-field__label, unless-class: -search }
+  - id: R-all-states
+    title: 상태를 빠뜨리지 않는다
+    rule: 화면 유형의 states 를 모두 그린다(상태마다 파일 하나). 상태 처리 문법을 따른다
+    severity: error
+    grade: fixed
+  - id: R-color-not-alone
+    title: 색만으로 말하지 않는다
+    rule: 상태 · 오류는 색과 함께 글 · 아이콘으로도 말한다
+    severity: warn
+    grade: fixed
+  - id: R-one-page-title
+    title: 화면 제목은 하나
+    rule: 화면마다 제목(-title-1 또는 상단 바 제목)은 하나
+    severity: warn
+    grade: product
+    check: { max-count: { -title-1: 1 } }

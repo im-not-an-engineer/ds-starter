@@ -1,0 +1,13 @@
+title: 진행 막대
+summary: 얼마나 왔는지 · 얼마나 찼는지를 막대로
+use: 단계 · 비율 · 업로드처럼 끝이 있는 진행. 숫자를 함께 보이면 __label
+avoid: 끝을 모르는 기다림은 버튼의 loading 또는 불러오는 중 상태([[G-state-loading]])
+class: ds-progress
+template: '<div class="{class}"{attrs}><progress class="ds-progress__bar" value="2" max="5"></progress><span class="ds-progress__label">2 / 5</span></div>'
+props:
+  tone: { vocab: tone, values: [info, success, warning, danger], default: info }
+no-states: true
+slots:
+  bar: { class: ds-progress__bar, note: 'progress 요소 — value · max' }
+  label: { class: ds-progress__label, optional: true, text: true }
+review: { status: draft }

@@ -1,0 +1,15 @@
+title: 고르기 칸
+summary: 정해진 값 여럿 중 하나를 펼쳐서 고르는 칸
+use: 고를 것이 다섯 개 넘거나 자리가 좁을 때. 이름표가 필요하면 [[field]] 안에
+avoid: 넷 이하이고 한눈에 비교해야 하면 [[radio]] · [[tabs]]. 자유 입력은 [[input]]
+class: ds-select
+template: '<select class="{class}"{attrs}><option>{label}</option><option>개발팀</option></select>'
+label: 디자인팀
+props:
+  size: { vocab: size, values: [sm, md, lg], default: md }
+states:
+  disabled: { attr: disabled }
+  invalid: { attr: aria-invalid, value: 'true' }
+  focus: { interaction: true }
+behavior: 네이티브 select — 열고 고르기는 기기가 한다(모바일은 기기의 고르기 판)
+review: { status: draft }

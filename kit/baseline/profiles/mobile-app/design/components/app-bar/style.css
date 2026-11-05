@@ -1,0 +1,6 @@
+.ds-app-bar { position: sticky; top: 0; z-index: var(--z-sticky); display: flex; align-items: center; gap: var(--space-4); height: var(--size-bar); padding: 0 var(--space-4); background: var(--color-bg-canvas); }
+.ds-app-bar__title { flex: 1; margin: 0; text-align: center; font: var(--font-weight-semibold) var(--text-title-3-size)/var(--text-title-3-line) var(--font-family-base); color: var(--color-fg-default); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-app-bar__lead { flex: none; }
+.ds-app-bar__actions { flex: none; display: flex; min-width: var(--size-control-md); justify-content: flex-end; }
+.ds-app-bar.-large { height: auto; padding: var(--space-12) var(--space-16) var(--space-8); }
+.ds-app-bar.-large .ds-app-bar__title { text-align: left; font-size: var(--text-title-1-size); line-height: var(--text-title-1-line); }

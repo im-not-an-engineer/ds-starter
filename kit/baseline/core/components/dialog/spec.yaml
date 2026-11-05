@@ -1,0 +1,16 @@
+title: 다이얼로그
+summary: 화면을 덮고 가운데에서 확인 · 짧은 입력을 받는 창
+use:
+  - 되돌릴 수 없는 행동 직전의 확인([[R-confirm-irreversible]]) — 제목은 묻는 말, 버튼은 행동 이름(「삭제」 · 「취소」)
+  - 현재 화면을 떠나지 않고 짧게 입력할 때(이름 바꾸기)
+avoid: 긴 입력 · 여러 단계는 화면으로. 알리기만 하면 [[toast]] · [[notice]]. 모바일의 고르기 목록은 바텀시트(프로필)
+class: ds-dialog
+template: '<dialog class="{class}" open{attrs}><h2 class="ds-dialog__title">이 기록을 지울까요?</h2><p class="ds-dialog__body">지운 기록은 되돌릴 수 없어요.</p><div class="ds-dialog__actions"><button class="ds-button">취소</button><button class="ds-button -danger">삭제</button></div></dialog>'
+no-states: true
+slots:
+  title: { class: ds-dialog__title, text: true, note: 묻는 말 한 줄 }
+  body: { class: ds-dialog__body, optional: true, note: 결과 · 이유 한두 줄 }
+  actions: { class: ds-dialog__actions, note: 오른쪽이 행동(진행), 왼쪽이 취소. 둘을 넘지 않는다 }
+behavior: 네이티브 dialog — data-dialog-open="<id>" 버튼이 연다, 바깥 · Esc 로 닫힘(behavior.js)
+a11y: dialog 요소(포커스가 안에 갇힌다). 제목을 aria-labelledby 로
+review: { status: draft }

@@ -1,0 +1,16 @@
+title: 스위치
+summary: 누르는 즉시 켜지고 꺼지는 설정
+use: 저장 버튼 없이 바로 반영되는 켜기 · 끄기(알림 켜기 · 공개 여부)
+avoid: 저장을 눌러야 반영되면 [[checkbox]]. 둘보다 많은 상태는 [[radio]]
+class: ds-switch
+template: '<label class="{class}"><span class="ds-switch__label">{label}</span><input type="checkbox" role="switch" class="ds-switch__control"{attrs}></label>'
+label: 알림
+states:
+  on: { attr: checked, note: input 에 }
+  disabled: { attr: disabled, note: input 에 }
+  focus: { interaction: true }
+slots:
+  label: { class: ds-switch__label, text: true, note: 무엇을 켜나 — 글자가 앞, 스위치가 뒤 }
+  control: { class: ds-switch__control, note: 'input type="checkbox" role="switch"' }
+a11y: role="switch". 켜짐 · 꺼짐을 색 말고도 손잡이 자리로 보인다
+review: { status: draft }

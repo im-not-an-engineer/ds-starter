@@ -1,0 +1,14 @@
+title: 토스트
+summary: 방금 한 일의 결과를 잠깐 알리고 사라지는 알림
+use: 저장됨 · 보냈어요처럼 결과만 알릴 때. 되돌리기가 있으면 __action 하나
+avoid: 사용자가 읽고 판단해야 하면 [[notice]] · [[dialog]]. 오류로 진행이 막히면 그 자리에 오류 표시
+class: ds-toast
+template: '<div class="{class}" role="status"{attrs}><span class="ds-toast__text">저장했어요</span><button class="ds-toast__action">되돌리기</button></div>'
+props:
+  tone: { vocab: tone, values: [neutral, success, danger], default: neutral }
+no-states: true
+slots:
+  text: { class: ds-toast__text, text: true }
+  action: { class: ds-toast__action, optional: true, note: 행동 하나 — 되돌리기 · 보기 }
+a11y: role="status"(오류는 role="alert")
+review: { status: draft }

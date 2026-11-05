@@ -1,0 +1,8 @@
+.ds-card { display: flex; flex-direction: column; gap: var(--space-12); padding: var(--space-16); border: var(--border-width-default) solid var(--color-border-default); border-radius: var(--radius-lg); background: var(--color-surface-default); color: var(--color-fg-default); text-decoration: none; }
+.ds-card.-flat { border-color: transparent; background: var(--color-bg-subtle); }
+.ds-card.-interactive { cursor: pointer; }
+.ds-card.-interactive:hover { box-shadow: var(--shadow-md); }
+.ds-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+.ds-card__title { margin: 0; font: var(--font-weight-semibold) var(--text-title-3-size)/var(--text-title-3-line) var(--font-family-base); }
+.ds-card__body { display: flex; flex-direction: column; gap: var(--space-8); }
+.ds-card__footer { display: flex; justify-content: flex-end; gap: var(--space-8); }

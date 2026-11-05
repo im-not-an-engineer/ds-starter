@@ -1,0 +1,3 @@
+.ds-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); padding: var(--space-12) 0; }
+.ds-toolbar__start, .ds-toolbar__end { display: flex; align-items: center; gap: var(--space-8); }
+.ds-toolbar .ds-select, .ds-toolbar .ds-input { width: auto; min-width: calc(var(--space-64) * 2.5); }

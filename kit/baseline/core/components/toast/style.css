@@ -1,0 +1,5 @@
+.ds-toast { display: inline-flex; align-items: center; gap: var(--space-12); min-height: var(--size-control-lg); padding: 0 var(--space-16); border-radius: var(--radius-md); background: var(--color-fg-default); color: var(--color-surface-default); box-shadow: var(--shadow-md); font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); z-index: var(--z-toast); }
+.ds-toast.-success .ds-toast__text::before { content: "✓ "; }
+.ds-toast.-danger { background: var(--color-status-danger-solid); color: var(--color-fg-on-solid); }
+.ds-toast__text { flex: 1; }
+.ds-toast__action { border: 0; background: none; color: inherit; font: inherit; font-weight: var(--font-weight-semibold); text-decoration: underline; cursor: pointer; }

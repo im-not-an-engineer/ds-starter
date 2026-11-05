@@ -1,0 +1,27 @@
+title: 버튼
+summary: 누르면 그 자리에서 행동이 일어나는 것
+use:
+  - 저장 · 다음 · 추가처럼 이 화면에서 일어나는 행동
+  - 화면의 주 행동은 -primary 하나([[R-one-primary]]), 나머지는 -secondary · -ghost
+  - 지우기 · 나가기처럼 되돌릴 수 없는 행동은 -danger, 누른 뒤 확인([[R-confirm-irreversible]])
+avoid:
+  - 다른 화면 · 바깥으로 옮겨 가기만 하면 링크(a) — 버튼 모양이 필요하면 a 에 ds-button
+  - 켜고 끄는 설정은 [[switch]], 여럿 중 고르기는 [[radio]] · [[tabs]]
+class: ds-button
+template: '<button type="button" class="{class}"{attrs}>{label}</button>'
+label: 저장
+props:
+  intent: { vocab: intent, values: [primary, secondary, ghost, danger], default: secondary }
+  size: { vocab: size, values: [sm, md, lg], default: md, note: 모바일의 주 버튼 · 아래 고정 자리는 lg }
+  block: { type: boolean, class: -block, note: 줄의 폭을 다 채움 — 모바일 아래 고정 자리 }
+  icon-only: { type: boolean, class: -icon-only, requires-attr: aria-label, note: 아이콘 하나만. aria-label 로 이름을 준다. 정사각 }
+states:
+  disabled: { attr: disabled, note: 누를 수 없음 — 숨기지 않고 비활성으로. 왜 못 누르는지 가까이에 알린다 }
+  loading: { attr: aria-busy, value: 'true', note: 처리 중 — 글자 자리에 도는 표시, 누를 수 없음, 폭은 그대로 }
+  hover: { interaction: true }
+  pressed: { interaction: true }
+  focus: { interaction: true }
+slots:
+  icon: { class: ds-button__icon, optional: true, note: '글자 앞 아이콘 — [[icon]] 을 넣는다' }
+a11y: 버튼은 button 요소(옮겨 가면 a). 아이콘만이면 aria-label. 포커스 링을 지우지 않는다
+review: { status: draft }

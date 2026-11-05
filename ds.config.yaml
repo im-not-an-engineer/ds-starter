@@ -1,0 +1,30 @@
+# 이 디자인 시스템의 신분증. 구조 잡기(스킬 ds-shape)에서 채운다. 에이전트가 가장 먼저 읽는 파일이다.
+name: my-design-system          # 영어 소문자 · 하이픈
+title: 우리 디자인 시스템
+description: ""                 # 무엇을 위한 시스템인가 — 제품 · 사용자 · 쓰임 한두 문장
+
+# 대상 — 프로필이 화면 틀 · 내비게이션 · 크기 · 문법의 기본값을 더한다.
+#   mobile-app · mobile-web · desktop-web · core(아직 모름 — 공통 기준만)
+profile: ""
+platform: ""                    # 사람이 읽는 설명(예: iOS · Android 앱, 웹뷰 없음)
+# viewports:                    # 미리보기 틀 — 비워 두면 프로필의 것을 쓴다
+#   - { id: phone, width: 390, height: 844 }
+
+# 구현 방식 — 컴포넌트 계약(spec)을 개발에서 무엇으로 쓰나. 생성 · 미리보기는 늘 HTML 참조 구현으로 한다.
+#   undecided(미정) · html(표준 HTML + 약간의 JS — 스타터킷의 참조 구현) · headless(헤드리스 + 이 시스템의 스타일 — 예: Base UI · Radix · React Aria)
+#   library(오픈소스 그대로 — 예: shadcn/ui · MUI · Ionic) · existing(조직의 기존 컴포넌트 코드)
+implementation:
+  approach: undecided
+  target: ""                    # 라이브러리 · 프레임워크 이름(approach 가 headless · library · existing 일 때)
+  mapping: design/implementation.yaml   # 컴포넌트 ↔ 구현 대응표
+
+# 그래픽 리소스 — 아이콘 · 그림을 어디서 받나. 구조 잡기에서 묻는다(작업 graphics).
+#   source: undecided(미정) · own(자체 세트 — 피그마 · SVG 폴더) · lucide · tabler · phosphor · heroicons · material
+#   들이는 명령: npm run ds -- icons import <폴더> · npm run ds -- icons add <세트> <이름…> · npm run ds -- icons list <세트> [찾을 말]
+icons:
+  source: undecided
+
+prefix: ds                      # 클래스 접두사 — 기준 컴포넌트는 ds- 로 깔린다
+language: ko
+design: design
+build: build

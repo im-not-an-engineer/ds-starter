@@ -1,0 +1,9 @@
+title: 구분선
+summary: 묶음 사이를 가르는 가는 선
+use: 간격만으로 나뉘지 않을 때만. 대개는 간격으로 충분하다
+class: ds-divider
+template: '<hr class="{class}"{attrs}>'
+props:
+  thick: { type: boolean, class: -thick, note: 모바일 섹션 사이의 두꺼운 면 구분 }
+no-states: true
+review: { status: draft }

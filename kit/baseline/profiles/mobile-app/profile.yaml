@@ -1,0 +1,5 @@
+title: 모바일 앱
+description: iOS · Android 앱(또는 앱 안 웹뷰). 세로 화면 · 손가락 · 하단 탭 바 · 화면 한 장 단위로 쌓이는 흐름
+viewports:
+  - { id: phone, width: 390, height: 844 }
+  - { id: small, width: 360, height: 740 }

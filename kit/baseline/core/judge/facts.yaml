@@ -1,0 +1,44 @@
+# 사실 — 화면을 고르고 채우기 전에 확인할 것. 요청에 없으면 묻는다. 물을 수 없으면 if-unknown 대로 가정하고 「확인 필요」 에 적는다.
+#   ask(물을 말) · type(yes-no · one-of · number · text) · values · if-unknown(모를 때의 가정) · affects(이 사실이 바꾸는 것)
+facts:
+  - id: F-goal
+    ask: 사용자가 이 화면에서 끝내려는 일은 무엇인가요? (보기 · 고르기 · 넣기 · 확인하기)
+    type: one-of
+    values: [보기, 고르기, 넣기, 확인하기]
+    if-unknown: 요청의 동사로 정한다 — 「보기」 면 보기
+    affects: 화면 유형
+  - id: F-count
+    ask: 보여 줄 것이 몇 건쯤인가요?
+    type: one-of
+    values: [하나, 몇 개(10 이하), 많음(수십 이상)]
+    if-unknown: 몇 개 — 많을 수 있으면 찾기 · 거르기를 둘지 「확인 필요」
+    affects: 목록 · 카드 · 검색 · 쪽 넘김
+  - id: F-item-actions
+    ask: 항목마다 할 수 있는 행동이 있나요? (열기 · 고치기 · 지우기)
+    type: one-of
+    values: [없음(보기만), 열기만, 여러 행동]
+    if-unknown: 열기만
+    affects: '[[C-list-card]]'
+  - id: F-edit
+    ask: 보기만 하나요, 고치기도 하나요?
+    type: one-of
+    values: [보기만, 고치기]
+    if-unknown: 보기만
+    affects: 상세 · 입력 유형, 저장 행동
+  - id: F-entry
+    ask: 사용자는 이 화면에 어디서 들어오나요? (탭 · 메뉴의 첫 화면 / 다른 화면에서 들어옴)
+    type: one-of
+    values: [첫 화면, 다른 화면에서]
+    if-unknown: 다른 화면에서 — 뒤로 가기를 둔다
+    affects: 머리(뒤로 · 닫기), 내비게이션(프로필)
+  - id: F-irreversible
+    ask: 되돌릴 수 없는 행동(지우기 · 보내기)이 있나요?
+    type: yes-no
+    if-unknown: 지우기 · 보내기라는 말이 있으면 있다
+    affects: '[[R-confirm-irreversible]]'
+  - id: F-empty-cause
+    ask: 비어 있을 수 있나요? 왜 비나요? (처음이라 · 거른 결과라 · 권한이 없어서)
+    type: one-of
+    values: [처음, 거른 결과, 권한 없음, 비지 않음]
+    if-unknown: 처음 — 빈 상태에 만들기 행동
+    affects: '[[G-state-empty]] · [[G-copy-empty]]'

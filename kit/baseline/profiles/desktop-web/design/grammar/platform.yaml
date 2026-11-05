@@ -1,0 +1,18 @@
+# 데스크톱 웹의 문법 — 프로필이 더한다.
+grammar:
+  - id: G-desktop-frame
+    title: 앱 틀과 판
+    rule: 화면은 [[shell]](사이드바 + 판). 판 머리 왼쪽에 제목, 오른쪽에 화면의 행동(주 행동은 맨 오른쪽). 판 안 가장자리 여백 24
+    grade: product
+  - id: G-desktop-density
+    title: 조밀하게
+    rule: 업무 화면은 -sm 컨트롤 · body-2 본문을 기본으로. 많은 건은 [[table]], 위에 [[toolbar]], 아래에 [[pagination]]
+    grade: product
+  - id: G-desktop-width
+    title: 읽는 폭
+    rule: 입력 · 읽기 판은 너무 넓히지 않는다(본문 폭 720 안팎). 표는 판의 폭을 다 쓴다
+    grade: product
+  - id: G-desktop-keyboard
+    title: 키보드
+    rule: 모든 행동은 키보드로 닿는다(Tab 순서 = 읽는 순서). 다이얼로그는 Esc 로 닫힌다
+    grade: fixed

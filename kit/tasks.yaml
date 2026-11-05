@@ -1,0 +1,91 @@
+# 작업 목록 — 디자인 시스템을 세우는 일들과 선행 조건. 스타터킷(도구 · 절차)의 일부라 조직이 고치지 않는다.
+# 순서대로 하지 않아도 된다. npm run ds -- status 가 「지금 할 수 있는 일」 과 「막힌 일 · 푸는 법」 을 보여 준다.
+# 진행 상태는 폴더 맨 위 progress.yaml 에 남는다(npm run ds -- progress <작업> <상태>).
+#
+#   needs     먼저 끝나야 하는 작업
+#   any       이 중 하나만 끝나면 된다(needs 에 더해)
+#   auto      도구가 내용으로 판정한다 — 진행 상태에 적지 않아도 된다
+#   required  이 작업이 끝나지 않으면 「완료」 로 판정하지 않는다
+#   skill     이 작업의 절차
+#   unblock   막혔을 때 푸는 법(사람에게 보여 줄 한 줄)
+
+tasks:
+  - id: shape
+    title: 구조 잡기 — 무엇을 위한 시스템 · 대상(프로필) · 구현 방식
+    needs: []
+    auto: shape
+    skill: ds-shape
+
+  - id: baseline
+    title: 기준 깔기 — 값 · 어휘 · 컴포넌트 · 문법 · 판단의 보편 기준을 design/ 에
+    needs: [shape]
+    auto: baseline
+    skill: ds-shape
+
+  - id: graphics
+    title: 그래픽 리소스 — 아이콘 · 그림을 어디서 받나(자체 세트 또는 오픈소스)
+    needs: [baseline]
+    auto: graphics
+    skill: ds-shape
+    unblock: "자체 아이콘이 있으면 SVG 폴더 · 피그마 위치를, 없으면 오픈소스 세트(lucide · tabler · phosphor · heroicons · material)를 디자이너가 고른다"
+
+  - id: figma-connect
+    title: 피그마 MCP 연결
+    needs: []
+    required: true
+    skill: ds-figma
+    unblock: "kit/docs/figma-mcp.md 를 따라 Claude Code 에 Figma MCP 를 잇는다. 잇기 전에도 화면 캡처로 다른 일을 먼저 할 수 있다"
+
+  - id: keyscreens
+    title: 기준 화면 넣기 — 이 시스템의 모양을 보여 주는 화면과 배울 것
+    needs: [baseline]
+    skill: ds-figma
+    unblock: "피그마 MCP 가 없으면 디자이너에게 화면을 2배 PNG 로 내보내 달라고 한다"
+
+  - id: values
+    title: 값 입히기 — 피그마 변수를 기준 값 계약에 대응
+    needs: [baseline]
+    any: [figma-connect, keyscreens]
+    skill: ds-figma
+
+  - id: components
+    title: 컴포넌트 모양 입히기 — 기준 컴포넌트에 피그마의 모양 · 변형을
+    needs: [values]
+    skill: ds-figma
+
+  - id: grammar
+    title: 문법 · 화면 유형의 기본값 맞추기 — 기준 화면에서 이 시스템의 위계 · 간격 · 자리를
+    needs: [keyscreens, components]
+    skill: ds-edit
+
+  - id: judge
+    title: 업무 · 사실 더하기 — 이 제품의 일과, 화면을 고르기 전에 물을 것
+    needs: [grammar]
+    skill: ds-edit
+
+  - id: generate
+    title: 생성 시험 — 지침만 받은 생성 세션이 화면을 만든다
+    needs: [components, grammar]
+    skill: ds-generate
+
+  - id: loop
+    title: 품질 루프 — 짐작한 것을 구조로 채우고 다시
+    needs: [generate]
+    skill: ds-loop
+
+  - id: review
+    title: 디자이너 검토 — 초안을 하나씩 보고 승인
+    needs: [components]
+    skill: ds-review
+
+  - id: implementation
+    title: 구현 방식과 대응표 — 컴포넌트 계약을 개발에서 쓸 구현에 잇기
+    needs: [shape, components]
+    skill: ds-edit
+    unblock: "구현 방식이 「미정」 이면 ds.config.yaml 의 implementation.approach 를 정한다(디자이너 · 개발과)"
+
+  - id: figma-verify
+    title: 캡처로 진행한 것을 피그마로 확인
+    needs: [figma-connect]
+    auto: figma-verify
+    skill: ds-figma

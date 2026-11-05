@@ -1,0 +1,7 @@
+rules:
+  - id: R-mobile-one-bar
+    title: 상단 바는 하나
+    rule: 화면마다 [[app-bar]] 하나(안내 · 완료 화면은 없어도 된다)
+    severity: error
+    grade: fixed
+    check: { max-count: { ds-app-bar: 1 } }

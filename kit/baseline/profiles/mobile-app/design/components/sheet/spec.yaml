@@ -1,0 +1,13 @@
+title: 바텀시트
+summary: 화면 아래에서 올라오는 판 — 고르기 목록 · 짧은 입력 · 이 화면에 대한 행동 모음
+use: 몇 개 중 고르기(정렬 · 거르기), 짧은 입력, 더보기의 행동 목록. 다 쓰면 내려간다
+avoid: 긴 입력 · 여러 단계는 화면으로. 되돌릴 수 없는 결정의 확인은 [[dialog]]
+class: ds-sheet
+template: '<div class="{class}" role="dialog" aria-label="정렬"{attrs}><div class="ds-sheet__handle"></div><h2 class="ds-sheet__title">정렬</h2><div class="ds-sheet__body"><div class="ds-list"><button class="ds-list__item" aria-current="true"><span class="ds-list__body"><span class="ds-list__title">최신순</span></span></button><button class="ds-list__item"><span class="ds-list__body"><span class="ds-list__title">이름순</span></span></button></div></div></div>'
+no-states: true
+slots:
+  handle: { class: ds-sheet__handle, optional: true }
+  title: { class: ds-sheet__title, optional: true, text: true }
+  body: { class: ds-sheet__body }
+  footer: { class: ds-sheet__footer, optional: true, note: 적용 · 확인 버튼 }
+review: { status: draft }

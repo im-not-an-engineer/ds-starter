@@ -1,0 +1,13 @@
+title: 가로 묶음
+summary: 요소를 가로로 놓고 세로 가운데 맞춤
+use: 이름 ↔ 값, 제목 ↔ 작은 행동, 버튼 둘처럼 한 줄에 놓이는 것. 양 끝으로 벌리면 -between
+avoid: 세로로 쌓기는 [[stack]]
+class: ds-row
+template: '<div class="{class}"{attrs}><span class="ds-text -title-3">제목</span><button class="ds-button -ghost -sm">전체</button></div>'
+props:
+  gap: { values: ['4', '8', '12', '16'], default: '8', class: '-gap-{value}' }
+  between: { type: boolean, class: -between, note: 양 끝으로 }
+  wrap: { type: boolean, class: -wrap, note: 넘치면 다음 줄로 }
+  equal: { type: boolean, class: -equal, note: 아이들이 폭을 똑같이 나눔 — 버튼 둘 반반 }
+no-states: true
+review: { status: draft }

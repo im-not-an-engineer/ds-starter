@@ -1,0 +1,13 @@
+title: 화면 틀
+summary: 화면 한 장의 뼈대 — 머리 · 본문 · 바닥(행동). 화면 유형의 골격(template)이 이것으로 시작한다
+use: 모든 화면의 가장 바깥. 머리에는 프로필의 상단 바 · 판 머리, 바닥에는 화면의 주 행동(모바일은 아래 고정)
+class: ds-page
+template: '<div class="{class}"{attrs}><header class="ds-page__header"><h1 class="ds-text -title-1">화면 제목</h1></header><main class="ds-page__body"><p class="ds-text">본문</p></main><footer class="ds-page__footer"><button class="ds-button -primary -lg -block">다음</button></footer></div>'
+no-states: true
+slots:
+  header: { class: ds-page__header, optional: true, note: 상단 바 · 제목 영역 }
+  body: { class: ds-page__body, note: 스크롤되는 본문 — 화면 가장자리 여백을 갖는다 }
+  footer: { class: ds-page__footer, optional: true, note: 화면의 행동 — 주 행동은 오른쪽(나란히) 또는 아래(모바일 -block) }
+props:
+  center: { type: boolean, class: -center, note: 본문을 가운데로 — 안내 · 완료 · 빈 화면 }
+review: { status: draft }

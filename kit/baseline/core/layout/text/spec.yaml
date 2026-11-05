@@ -1,0 +1,13 @@
+title: 글자
+summary: 컴포넌트 밖의 글 — 단계(크기 · 줄 높이) · 색 · 굵기
+use: 화면 제목 · 섹션 제목 · 설명 · 숫자처럼 컴포넌트가 갖고 있지 않은 글. 단계는 위계로 고른다(값 text 의 「고르는 법」)
+avoid: 컴포넌트 안의 글(버튼 · 목록 제목)에 덧씌우지 않는다 — 그 컴포넌트의 짜임을 쓴다
+class: ds-text
+template: '<p class="{class}"{attrs}>{label}</p>'
+label: 이번 달 지출
+props:
+  level: { values: [display, title-1, title-2, title-3, body-1, body-2, caption], default: body-1, class: '-{value}' }
+  tone: { values: [default, muted, subtle, accent, danger, success], default: default, class: '-tone-{value}' }
+  weight: { values: [regular, medium, semibold, bold], default: regular, class: '-w-{value}' }
+no-states: true
+review: { status: draft }

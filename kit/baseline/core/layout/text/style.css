@@ -1,0 +1,18 @@
+.ds-text { margin: 0; font-family: var(--font-family-base); font-size: var(--text-body-1-size); line-height: var(--text-body-1-line); color: var(--color-fg-default); }
+.ds-text.-display { font-size: var(--text-display-size); line-height: var(--text-display-line); font-weight: var(--font-weight-bold); }
+.ds-text.-title-1 { font-size: var(--text-title-1-size); line-height: var(--text-title-1-line); font-weight: var(--font-weight-semibold); }
+.ds-text.-title-2 { font-size: var(--text-title-2-size); line-height: var(--text-title-2-line); font-weight: var(--font-weight-semibold); }
+.ds-text.-title-3 { font-size: var(--text-title-3-size); line-height: var(--text-title-3-line); font-weight: var(--font-weight-semibold); }
+.ds-text.-body-1 { font-size: var(--text-body-1-size); line-height: var(--text-body-1-line); }
+.ds-text.-body-2 { font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); }
+.ds-text.-caption { font-size: var(--text-caption-size); line-height: var(--text-caption-line); }
+.ds-text.-tone-default { color: var(--color-fg-default); }
+.ds-text.-tone-muted { color: var(--color-fg-muted); }
+.ds-text.-tone-subtle { color: var(--color-fg-subtle); }
+.ds-text.-tone-accent { color: var(--color-accent-fg); }
+.ds-text.-tone-danger { color: var(--color-status-danger-fg); }
+.ds-text.-tone-success { color: var(--color-status-success-fg); }
+.ds-text.-w-regular { font-weight: var(--font-weight-regular); }
+.ds-text.-w-medium { font-weight: var(--font-weight-medium); }
+.ds-text.-w-semibold { font-weight: var(--font-weight-semibold); }
+.ds-text.-w-bold { font-weight: var(--font-weight-bold); }

@@ -1,0 +1,11 @@
+title: 세로 묶음
+summary: 요소를 세로로 쌓고 사이 간격을 단계로
+use: 거의 모든 세로 배치. 간격은 관계로 고른다 — 같은 묶음 8~12, 묶음 사이 16~24, 큰 덩어리 32(값 space 의 「고르는 법」)
+avoid: 가로로 놓기는 [[row]]
+class: ds-stack
+template: '<div class="{class}"{attrs}><span class="ds-badge">하나</span><span class="ds-badge">둘</span></div>'
+props:
+  gap: { values: ['4', '8', '12', '16', '24', '32'], default: '12', class: '-gap-{value}', note: 사이 간격(px) }
+  align: { values: [stretch, start, center], default: stretch, class: '-align-{value}' }
+no-states: true
+review: { status: draft }

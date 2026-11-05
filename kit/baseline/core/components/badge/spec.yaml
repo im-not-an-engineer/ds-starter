@@ -1,0 +1,12 @@
+title: 배지
+summary: 상태 · 분류를 짧게 붙이는 이름표
+use: 진행 중 · 완료 · 마감 임박 같은 상태(뜻 색), 분류 이름(neutral). 줄 · 카드 머리 옆에
+avoid: 누르는 것은 배지가 아니다 — 거르기는 칩(프로필) · [[tabs]]. 문장은 [[notice]]
+class: ds-badge
+template: '<span class="{class}"{attrs}>{label}</span>'
+label: 진행 중
+props:
+  tone: { vocab: tone, values: [neutral, info, success, warning, danger], default: neutral }
+  emphasis: { vocab: emphasis, values: [subtle, solid, outline], default: subtle, note: solid 는 화면에 하나 — 가장 중요한 상태 }
+no-states: true
+review: { status: draft }

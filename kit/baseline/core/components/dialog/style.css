@@ -1,0 +1,6 @@
+.ds-dialog { width: min(calc(100% - var(--space-32)), calc(var(--space-64) * 6)); padding: var(--space-24); border: 0; border-radius: var(--radius-xl); background: var(--color-surface-default); color: var(--color-fg-default); box-shadow: var(--shadow-lg); }
+.ds-dialog[open]:not(:modal) { position: relative; margin: var(--space-16) auto; }
+.ds-dialog::backdrop { background: var(--color-scrim); }
+.ds-dialog__title { margin: 0 0 var(--space-8); font: var(--font-weight-semibold) var(--text-title-2-size)/var(--text-title-2-line) var(--font-family-base); }
+.ds-dialog__body { margin: 0; color: var(--color-fg-muted); font-size: var(--text-body-1-size); line-height: var(--text-body-1-line); }
+.ds-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-8); margin-top: var(--space-24); }

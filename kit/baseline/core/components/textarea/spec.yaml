@@ -1,0 +1,12 @@
+title: 여러 줄 입력
+summary: 문장 · 메모 · 의견처럼 긴 글을 넣는 칸
+use: 한 줄을 넘는 글. 이름표가 필요하면 [[field]] 안에
+avoid: 짧은 값은 [[input]]
+class: ds-textarea
+template: '<textarea class="{class}" rows="4" placeholder="{label}"{attrs}></textarea>'
+label: 의견을 적어 주세요
+states:
+  disabled: { attr: disabled }
+  invalid: { attr: aria-invalid, value: 'true' }
+  focus: { interaction: true }
+review: { status: draft }

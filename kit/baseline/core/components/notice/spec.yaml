@@ -1,0 +1,14 @@
+title: 안내
+summary: 화면 안에 머무는 안내 · 경고 · 오류 상자
+use: 이 화면을 읽기 전에 알아야 할 것(마감 · 조건) · 화면 전체에 걸린 오류. 행동이 있으면 __action 하나
+avoid: 결과만 잠깐 알리면 [[toast]]. 칸 하나의 오류는 [[field]] 의 __error. 상자를 한 화면에 둘 넘게 두지 않는다
+class: ds-notice
+template: '<div class="{class}" role="note"{attrs}><span class="ds-notice__title">평가 마감 3일 전이에요</span><span class="ds-notice__text">11월 8일까지 제출해 주세요.</span></div>'
+props:
+  tone: { vocab: tone, values: [info, success, warning, danger], default: info }
+no-states: true
+slots:
+  title: { class: ds-notice__title, optional: true, text: true }
+  text: { class: ds-notice__text, text: true }
+  action: { class: ds-notice__action, optional: true, note: '[[button]] -ghost -sm 하나' }
+review: { status: draft }

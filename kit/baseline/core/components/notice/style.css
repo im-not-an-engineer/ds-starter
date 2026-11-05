@@ -1,0 +1,7 @@
+.ds-notice { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-12) var(--space-16); border-radius: var(--radius-md); background: var(--color-status-info-subtle); color: var(--color-status-info-fg); font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); }
+.ds-notice.-success { background: var(--color-status-success-subtle); color: var(--color-status-success-fg); }
+.ds-notice.-warning { background: var(--color-status-warning-subtle); color: var(--color-status-warning-fg); }
+.ds-notice.-danger { background: var(--color-status-danger-subtle); color: var(--color-status-danger-fg); }
+.ds-notice__title { font-weight: var(--font-weight-semibold); }
+.ds-notice__text { color: inherit; }
+.ds-notice__action { align-self: flex-start; margin-top: var(--space-4); }

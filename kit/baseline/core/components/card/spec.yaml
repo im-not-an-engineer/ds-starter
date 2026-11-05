@@ -1,0 +1,19 @@
+title: 카드
+summary: 한 건을 하나의 면에 담은 덩어리 — 머리 · 내용 · 바닥(행동)
+use:
+  - 건마다 내용 · 행동이 여럿이라 줄 하나로는 모자랄 때(요약 숫자 + 버튼, 그림 + 설명)
+  - 대시보드 · 홈의 구획
+  - 누르면 상세로 가는 카드는 a 로, -interactive
+avoid: 같은 모양이 길게 반복되면 [[list]]. 안내 문구만이면 [[notice]]. 카드 안에 카드를 넣지 않는다
+class: ds-card
+template: '<article class="{class}"{attrs}><header class="ds-card__header"><h3 class="ds-card__title">이번 달 지출</h3></header><div class="ds-card__body">482,300원</div><footer class="ds-card__footer"><button class="ds-button -sm">자세히</button></footer></article>'
+props:
+  interactive: { type: boolean, class: -interactive, note: 카드 전체가 눌림(a) — 안에 다른 버튼을 두지 않는다 }
+  flat: { type: boolean, class: -flat, note: 테두리 대신 옅은 면 — 화면 바탕이 흰색일 때 }
+no-states: true
+slots:
+  header: { class: ds-card__header, optional: true, note: 제목과 오른쪽 작은 행동 · 배지 }
+  title: { class: ds-card__title, text: true }
+  body: { class: ds-card__body }
+  footer: { class: ds-card__footer, optional: true, note: 행동 — 오른쪽 맞춤 }
+review: { status: draft }

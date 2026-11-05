@@ -1,0 +1,4 @@
+.ds-empty { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); padding: var(--space-48) var(--space-16); text-align: center; }
+.ds-empty__art { width: var(--space-64); height: var(--space-64); margin-bottom: var(--space-8); }
+.ds-empty__title { margin: 0; font: var(--font-weight-semibold) var(--text-title-3-size)/var(--text-title-3-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-empty__text { margin: 0 0 var(--space-8); font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); color: var(--color-fg-muted); }

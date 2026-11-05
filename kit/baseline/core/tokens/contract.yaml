@@ -1,0 +1,168 @@
+# 계약 — 컴포넌트 CSS 가 쓰는 유일한 이름. 키 집합은 보편 기준이고, 값은 피그마를 들일 때 이 시스템의 것으로 바뀐다.
+# 에이전트가 값을 고를 근거: $description(무엇) · $use(언제) · $avoid(쓰지 않을 때) · $pair(함께 쓰는 값). 갈래마다 groups 의 how(고르는 법).
+# 키를 더하거나 이름을 바꾸면 디자이너가 정한다 — 이름이 곧 에이전트의 어휘다.
+layer: contract
+
+groups:
+  color:
+    title: 색
+    how: |
+      색은 「무엇을 칠하나(bg · surface · fg · border)」 와 「어떤 뜻인가(accent · status)」 로 고른다. 재질 이름(파랑 · 회색)으로 고르지 않는다.
+      글자색은 그 아래 면과 짝이 맞는 것을 쓴다 — 강조 면 위는 fg.on-solid, 상태 면(subtle) 위는 그 상태의 fg.
+      뜻이 없는 곳에 accent · status 를 쓰지 않는다(장식으로 파랑 · 빨강을 칠하지 않는다).
+  space:
+    title: 간격
+    how: |
+      이름이 곧 px 다(space.16 = 16px). 가까운 것일수록 좁게 — 한 컴포넌트 안(아이콘 ↔ 글자) 4~8, 같은 묶음의 항목 사이 8~12,
+      묶음 ↔ 묶음 16~24, 화면의 큰 덩어리 사이 24~40. 화면 가장자리 여백은 profile 의 문법을 따른다. 사이 값(10 · 14)을 만들지 않는다.
+  size:
+    title: 크기
+    how: 누르는 것의 높이는 size.control 셋 중 하나. 손가락으로 누르는 화면(모바일)에서는 md 이상, 누르는 자리는 size.touch 이상.
+  radius:
+    title: 모서리
+    how: 작은 것일수록 작은 모서리 — 태그 · 체크 sm, 버튼 · 입력 md, 카드 · 시트 lg, 큰 면 xl. 알약 모양(full)은 태그 · 토글 · 아바타에만.
+  text:
+    title: 글자
+    how: |
+      글자 단계는 위계를 만든다 — 한 화면에 제목 단계는 둘까지(title 하나 + 그 아래 하나). 본문은 body-1 이 기본, 밀도가 높은 곳은 body-2.
+      caption 은 보조 정보(날짜 · 단위 · 도움말)에만. 크기와 줄 높이는 짝으로 쓴다(text.<단계>.size · text.<단계>.line).
+  font:
+    title: 글꼴
+    how: 굵기로 위계를 더할 때는 regular ↔ semibold 두 단계로 충분하다. bold 는 숫자 · 짧은 강조에만.
+  shadow:
+    title: 그림자
+    how: 떠 있는 것만 그림자를 갖는다 — sm 은 눌러서 뜨는 것(드롭다운), md 는 카드가 떠야 할 때, lg 는 시트 · 다이얼로그. 바닥에 놓인 카드는 그림자 대신 테두리.
+  border:
+    title: 선
+    how: 선은 1(default) 하나로. 2(strong)는 고른 것 · 포커스에만.
+  z:
+    title: 겹침 순서
+    how: 화면 위에 뜨는 것의 순서. 숫자를 지어내지 않는다.
+  motion:
+    title: 움직임
+    how: 상태 바뀜(호버 · 펼침)은 fast, 화면에 들어오고 나가는 것(시트 · 다이얼로그 · 토스트)은 normal.
+
+tokens:
+  color:
+    bg:
+      canvas: { $value: '{gray.50}', $description: 화면의 바탕, $use: 화면 전체의 맨 아래 면, $avoid: 카드 · 입력의 면에는 surface.default, $pair: color.fg.default }
+      subtle: { $value: '{gray.100}', $description: 옅은 구획 면, $use: 묶음을 살짝 구분하는 면 · 읽기 전용 칸 · 표 머리, $avoid: 눌림 표시는 surface.pressed }
+      muted: { $value: '{gray.150}', $description: 비활성 면, $use: 누를 수 없는 컨트롤의 면 · 빈 진행 막대 길, $pair: color.fg.disabled }
+    surface:
+      default: { $value: '{white}', $description: 내용이 놓이는 면, $use: 카드 · 입력 · 목록 · 시트 · 다이얼로그의 면, $pair: color.fg.default }
+      raised: { $value: '{white}', $description: 떠 있는 면, $use: 드롭다운 · 팝오버 · 토스트 — shadow 와 함께 }
+      hover: { $value: '{gray.50}', $description: 커서가 올라간 면, $use: 누를 수 있는 줄 · 칸에 커서가 올라갔을 때(마우스가 있는 화면) }
+      pressed: { $value: '{gray.100}', $description: 눌린 면, $use: 누르는 순간 · 손가락 화면의 눌림 }
+      selected: { $value: '{blue.50}', $description: 고른 면, $use: 고른 줄 · 고른 칸 · 지금 화면의 메뉴, $pair: color.accent.fg }
+    fg:
+      default: { $value: '{gray.900}', $description: 기본 글자, $use: 본문 · 제목 · 값 }
+      muted: { $value: '{gray.600}', $description: 덜 중요한 글자, $use: 보조 설명 · 이름표 · 아이콘, $avoid: 읽어야 하는 본문에는 default }
+      subtle: { $value: '{gray.400}', $description: 가장 약한 글자, $use: 자리 표시(placeholder) · 단위 · 날짜, $avoid: 의미 있는 정보에는 쓰지 않는다 — 대비가 낮다 }
+      disabled: { $value: '{gray.300}', $description: 쓸 수 없는 것의 글자, $use: 비활성 컨트롤의 글자 · 아이콘, $pair: color.bg.muted }
+      on-solid: { $value: '{white}', $description: 진한 면 위의 글자, $use: 주 버튼 · 진한 상태 배지 위, $pair: [color.accent.solid, color.status.danger.solid] }
+      link: { $value: '{blue.600}', $description: 링크 글자, $use: 다른 곳으로 옮겨 가는 글 }
+    border:
+      default: { $value: '{gray.200}', $description: 기본 선, $use: 카드 · 입력 · 구분선 }
+      strong: { $value: '{gray.400}', $description: 강한 선, $use: 커서가 올라간 입력 · 체크 박스 테두리 }
+      subtle: { $value: '{gray.150}', $description: 옅은 선, $use: 목록 줄 사이 · 표 칸 사이, $avoid: 입력 칸의 테두리에는 default }
+    accent:
+      solid: { $value: '{blue.500}', $description: 강조 면, $use: 화면의 주 행동(주 버튼) · 켜진 스위치 · 고른 라디오, $avoid: 장식 · 넓은 면에 쓰지 않는다 — 화면에 강조 면은 적을수록 좋다, $pair: color.fg.on-solid }
+      solid-hover: { $value: '{blue.600}', $description: 강조 면에 커서 }
+      solid-pressed: { $value: '{blue.700}', $description: 강조 면을 누름 }
+      subtle: { $value: '{blue.50}', $description: 옅은 강조 면, $use: 강조 색의 약한 배경(안내 · 고른 칩), $pair: color.accent.fg }
+      fg: { $value: '{blue.600}', $description: 강조 글자, $use: 고른 탭 · 고른 메뉴의 글자 · 텍스트 버튼 }
+    status:
+      info:
+        solid: { $value: '{blue.500}', $description: 정보 — 진한 면, $pair: color.fg.on-solid }
+        subtle: { $value: '{blue.50}', $description: 정보 — 옅은 면, $use: 안내 상자 · 정보 배지, $pair: color.status.info.fg }
+        fg: { $value: '{blue.700}', $description: 정보 글자 }
+      success:
+        solid: { $value: '{green.500}', $description: 성공 — 진한 면, $pair: color.fg.on-solid }
+        subtle: { $value: '{green.50}', $description: 성공 — 옅은 면, $use: 완료 · 정상 상태 배지 · 성공 안내, $pair: color.status.success.fg }
+        fg: { $value: '{green.700}', $description: 성공 글자 }
+      warning:
+        solid: { $value: '{amber.500}', $description: 주의 — 진한 면, $pair: color.fg.default }
+        subtle: { $value: '{amber.50}', $description: 주의 — 옅은 면, $use: 확인이 필요한 상태 · 마감 임박, $pair: color.status.warning.fg }
+        fg: { $value: '{amber.700}', $description: 주의 글자 }
+      danger:
+        solid: { $value: '{red.500}', $description: 위험 — 진한 면, $use: 지우기처럼 되돌릴 수 없는 주 행동의 면, $pair: color.fg.on-solid }
+        subtle: { $value: '{red.50}', $description: 위험 — 옅은 면, $use: 오류 안내 · 실패 배지, $pair: color.status.danger.fg }
+        fg: { $value: '{red.600}', $description: 위험 글자, $use: 입력 오류 문구 · 오류 테두리 }
+    focus: { $value: '{blue.400}', $description: 포커스 링, $use: 키보드로 고른 요소의 바깥 링 — 모든 누를 수 있는 것에 }
+    scrim: { $value: 'rgba(15, 17, 20, 0.45)', $description: 화면 덮개, $use: 다이얼로그 · 시트 뒤를 어둡게 }
+
+  space:
+    0: { $value: '{scale.0}', $description: 붙임 — 간격 없음 }
+    2: { $value: '{scale.2}', $description: 아주 좁음 — 붙어 보여야 하는 둘(숫자와 단위) }
+    4: { $value: '{scale.4}', $description: 좁음 — 아이콘 ↔ 글자, 이름표 ↔ 값 }
+    6: { $value: '{scale.6}', $description: 이름표 ↔ 입력 칸처럼 바짝 붙는 둘 }
+    8: { $value: '{scale.8}', $description: 컴포넌트 안 · 같은 묶음 항목 사이 }
+    12: { $value: '{scale.12}', $description: 같은 묶음의 항목 사이(넉넉히) · 카드 안 여백(조밀) }
+    16: { $value: '{scale.16}', $description: 기본 — 카드 안 여백 · 화면 가장자리(모바일) · 묶음 사이 }
+    20: { $value: '{scale.20}', $description: 넓은 카드 안 여백 }
+    24: { $value: '{scale.24}', $description: 묶음 ↔ 묶음 · 섹션 사이 }
+    32: { $value: '{scale.32}', $description: 큰 덩어리 사이 }
+    40: { $value: '{scale.40}', $description: 화면 맨 위 큰 제목 위 · 섹션 사이(넓은 화면) }
+    48: { $value: '{scale.48}', $description: 화면 맨 위 · 빈 상태의 위아래 여백 }
+    64: { $value: '{scale.64}', $description: 빈 상태 그림 · 큰 화면의 구획 사이 }
+
+  size:
+    control:
+      sm: { $value: '{scale.32}', $description: 작은 컨트롤 높이, $use: 표 · 목록 줄 안 · 조밀한 도구 줄 }
+      md: { $value: '{scale.40}', $description: 기본 컨트롤 높이 }
+      lg: { $value: '{scale.48}', $description: 큰 컨트롤 높이, $use: 모바일의 주 버튼 · 화면 아래 고정 버튼 }
+    touch: { $value: '{scale.44}', $description: 손가락으로 누르는 자리의 최소 크기, $use: 모바일 화면의 모든 누를 수 있는 것 }
+    icon:
+      sm: { $value: '{scale.16}', $description: 작은 아이콘, $use: 글자 옆 · 배지 안 }
+      md: { $value: '{scale.20}', $description: 기본 아이콘 }
+      lg: { $value: '{scale.24}', $description: 큰 아이콘, $use: 상단 바 · 탭 바 }
+    bar: { $value: '{scale.56}', $description: 상단 바 · 하단 탭 바 높이 }
+    avatar:
+      sm: { $value: '{scale.24}', $description: 작은 아바타 — 목록 줄 안 · 여러 사람 겹침 }
+      md: { $value: '{scale.32}', $description: 기본 아바타 — 사람 줄 · 머리의 내 계정 }
+      lg: { $value: '{scale.48}', $description: 큰 아바타 — 프로필 머리 }
+
+  radius:
+    sm: { $value: '{scale.4}', $description: 작은 모서리 — 태그 · 체크박스 }
+    md: { $value: '{scale.8}', $description: 기본 — 버튼 · 입력 · 작은 카드 }
+    lg: { $value: '{scale.12}', $description: 카드 · 목록 묶음 }
+    xl: { $value: '{scale.16}', $description: 시트 · 다이얼로그 · 큰 면 }
+    full: { $value: 999px, $description: 알약 · 원 — 태그 · 스위치 · 아바타 }
+
+  text:
+    display: { size: { $value: '{scale.28}', $description: 화면의 주인공 숫자 · 첫 화면의 큰 제목 }, line: '{scale.36}' }
+    title-1: { size: { $value: '{scale.22}', $description: 화면 제목(본문 맨 위) }, line: '{scale.28}' }
+    title-2: { size: { $value: '{scale.18}', $description: 섹션 제목 · 다이얼로그 제목 }, line: '{scale.24}' }
+    title-3: { size: { $value: '{scale.16}', $description: 묶음 · 카드 제목 }, line: '{scale.22}' }
+    body-1: { size: { $value: '{scale.16}', $description: 기본 본문 · 입력 값 }, line: '{scale.24}' }
+    body-2: { size: { $value: '{scale.14}', $description: 조밀한 본문 · 목록 보조 줄 · 버튼(sm) }, line: '{scale.20}' }
+    caption: { size: { $value: '{scale.12}', $description: 보조 정보 — 날짜 · 단위 · 도움말 }, line: '{scale.16}' }
+  font:
+    family:
+      base: { $value: 'system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif', $description: 기본 글꼴 }
+      mono: { $value: 'ui-monospace, "SF Mono", Menlo, monospace', $description: 코드 · 고정폭 숫자 }
+    weight:
+      regular: { $value: 400, $description: 본문 }
+      medium: { $value: 500, $description: 버튼 · 이름표 }
+      semibold: { $value: 600, $description: 제목 · 강조 }
+      bold: { $value: 700, $description: 숫자 · 짧은 강조 }
+
+  shadow:
+    sm: { $value: '0 1px 2px rgba(15, 17, 20, 0.08)', $description: 살짝 뜸 — 드롭다운 · 토글 손잡이 }
+    md: { $value: '0 4px 12px rgba(15, 17, 20, 0.10)', $description: 떠 있는 카드 · 팝오버 · 토스트 }
+    lg: { $value: '0 12px 32px rgba(15, 17, 20, 0.16)', $description: 시트 · 다이얼로그 }
+  border:
+    width:
+      default: { $value: '{scale.1}', $description: 기본 선 두께 }
+      strong: { $value: '{scale.2}', $description: 고른 것 · 포커스 링 }
+  z:
+    sticky: { $value: 10, $description: 스크롤해도 붙어 있는 머리 · 바닥 }
+    overlay: { $value: 100, $description: 드롭다운 · 팝오버 }
+    modal: { $value: 200, $description: 다이얼로그 · 시트 }
+    toast: { $value: 300, $description: 토스트 — 맨 위 }
+  motion:
+    duration:
+      fast: { $value: 120ms, $description: 상태 바뀜 }
+      normal: { $value: 200ms, $description: 들어오고 나감 }
+    easing:
+      standard: { $value: 'cubic-bezier(0.2, 0, 0, 1)', $description: 기본 움직임 곡선 }

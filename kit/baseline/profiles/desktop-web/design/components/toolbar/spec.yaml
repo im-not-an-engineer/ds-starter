@@ -1,0 +1,11 @@
+title: 도구 줄
+summary: 목록 · 표 위의 한 줄 — 왼쪽 건수 · 거르기, 오른쪽 찾기 · 보기 설정
+use: 판 머리 아래, 표 · 목록 바로 위. 거르기는 [[select]] -sm, 찾기는 [[input]] -search -sm
+avoid: 화면 전체의 행동(추가 · 내보내기)은 판 머리 오른쪽([[G-actions-place]])
+class: ds-toolbar
+template: '<div class="{class}"{attrs}><div class="ds-toolbar__start"><span class="ds-text -body-2 -w-semibold">전체 128건</span><select class="ds-select -sm"><option>상태: 전체</option></select></div><div class="ds-toolbar__end"><input class="ds-input -search -sm" placeholder="찾기"></div></div>'
+no-states: true
+slots:
+  start: { class: ds-toolbar__start }
+  end: { class: ds-toolbar__end }
+review: { status: draft }

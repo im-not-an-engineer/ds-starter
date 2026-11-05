@@ -1,0 +1,12 @@
+title: 빈 상태
+summary: 보여 줄 것이 없을 때 그 자리에 — 무엇이 비었나 · 다음에 할 일
+use: 목록 · 결과 · 그래프 자리가 비었을 때 그 자리 가운데. 처음이라 비었으면 만들기 행동 하나, 거른 결과가 비었으면 거르기 풀기
+avoid: 오류로 못 불러온 것은 빈 상태가 아니다 — [[G-state-error]]
+class: ds-empty
+template: '<div class="{class}"{attrs}><p class="ds-empty__title">아직 기록이 없어요</p><p class="ds-empty__text">첫 기록을 남겨 보세요.</p><button class="ds-button -primary">기록하기</button></div>'
+no-states: true
+slots:
+  art: { class: ds-empty__art, optional: true, note: 그림 하나(시스템의 그림 부품) }
+  title: { class: ds-empty__title, text: true, note: 무엇이 비었나 }
+  text: { class: ds-empty__text, optional: true, text: true, note: 다음에 할 일 }
+review: { status: draft }

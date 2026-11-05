@@ -1,0 +1,17 @@
+title: 한 줄 입력
+summary: 짧은 글 · 숫자를 넣는 칸
+use: 이름 · 이메일 · 숫자 · 검색어처럼 한 줄로 끝나는 값. 이름표가 필요하면 [[field]] 안에
+avoid: 여러 줄은 [[textarea]], 정해진 것 중 고르기는 [[select]] · [[radio]]
+class: ds-input
+template: '<input class="{class}" placeholder="{label}"{attrs}>'
+label: 입력하세요
+props:
+  size: { vocab: size, values: [sm, md, lg], default: md }
+  search: { type: boolean, class: -search, note: 검색 칸 — 이름표 없이 자리 표시만 써도 된다(앞에 돋보기) }
+states:
+  disabled: { attr: disabled }
+  invalid: { attr: aria-invalid, value: 'true', note: '값이 틀림 — 테두리가 위험 색. 문구는 [[field]] 의 __error' }
+  readonly: { attr: readonly, note: 볼 수만 있음 — 옅은 면 }
+  focus: { interaction: true }
+a11y: placeholder 를 이름표 대신 쓰지 않는다. type 을 맞춘다(email · number · search …)
+review: { status: draft }

@@ -1,0 +1,26 @@
+# 갈림 — 헷갈리는 둘(셋)을 가르는 기준. 컴포넌트의 avoid 보다 넓게, 화면에서 자주 갈리는 것만.
+choices:
+  - id: C-list-card
+    title: 목록 줄 vs 카드
+    between: ['[[list]]', '[[card]]']
+    pick: 같은 모양이 반복되고 줄 하나로 읽히면 목록. 건마다 내용 · 행동이 여럿이거나 그림 · 큰 숫자가 주인공이면 카드. 보기만 하는 정보의 나열은 목록(또는 묶음 + 글자)
+  - id: C-tabs-select-radio
+    title: 탭 vs 고르기 칸 vs 라디오
+    between: ['[[tabs]]', '[[select]]', '[[radio]]']
+    pick: 같은 자리의 보기를 바꾸면 탭(2~5). 값을 고르면 넷 이하는 라디오, 그 넘으면 고르기 칸
+  - id: C-check-switch
+    title: 체크박스 vs 스위치
+    between: ['[[checkbox]]', '[[switch]]']
+    pick: 누르는 즉시 반영되면 스위치, 저장을 눌러야 반영되거나 여럿을 고르면 체크박스
+  - id: C-feedback
+    title: 토스트 vs 안내 vs 다이얼로그
+    between: ['[[toast]]', '[[notice]]', '[[dialog]]']
+    pick: 방금 한 일의 결과면 토스트. 이 화면을 쓰는 동안 알아야 하면 안내. 진행 전에 결정을 받아야 하면 다이얼로그
+  - id: C-badge-text
+    title: 배지 vs 글자
+    between: ['[[badge]]', '[[text]]']
+    pick: 정해진 상태 · 분류의 이름(몇 개 중 하나)이면 배지. 자유로운 설명 · 값이면 글자
+  - id: C-button-link
+    title: 버튼 vs 링크
+    between: ['[[button]]']
+    pick: 이 자리에서 일이 일어나면 button. 다른 화면 · 바깥으로 옮겨 가기만 하면 a(모양이 필요하면 a.ds-button)

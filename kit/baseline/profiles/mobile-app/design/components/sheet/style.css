@@ -1,0 +1,5 @@
+.ds-sheet { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-8) 0 var(--space-16); border-radius: var(--radius-xl) var(--radius-xl) 0 0; background: var(--color-surface-default); box-shadow: var(--shadow-lg); z-index: var(--z-modal); }
+.ds-sheet__handle { align-self: center; width: var(--space-40); height: var(--space-4); border-radius: var(--radius-full); background: var(--color-border-default); }
+.ds-sheet__title { margin: 0; padding: var(--space-8) var(--space-16); font: var(--font-weight-semibold) var(--text-title-3-size)/var(--text-title-3-line) var(--font-family-base); }
+.ds-sheet__body { max-height: 60vh; overflow: auto; }
+.ds-sheet__footer { display: flex; gap: var(--space-8); padding: 0 var(--space-16); }

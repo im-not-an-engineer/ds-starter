@@ -1,0 +1,8 @@
+.ds-table { width: 100%; border-collapse: collapse; background: var(--color-surface-default); font-size: var(--text-body-2-size); line-height: var(--text-body-2-line); color: var(--color-fg-default); }
+.ds-table__th { height: var(--size-control-md); padding: 0 var(--space-12); text-align: left; font-weight: var(--font-weight-medium); color: var(--color-fg-muted); background: var(--color-bg-subtle); border-bottom: var(--border-width-default) solid var(--color-border-default); white-space: nowrap; }
+.ds-table__td { height: var(--size-control-lg); padding: 0 var(--space-12); border-bottom: var(--border-width-default) solid var(--color-border-subtle); }
+.ds-table.-compact .ds-table__td { height: var(--size-control-md); }
+.ds-table__th.-num, .ds-table__td.-num { text-align: right; font-variant-numeric: tabular-nums; }
+.ds-table__row.-interactive { cursor: pointer; }
+.ds-table__row.-interactive:hover { background: var(--color-surface-hover); }
+.ds-table__row[aria-selected="true"] { background: var(--color-surface-selected); }

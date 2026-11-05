@@ -1,0 +1,12 @@
+title: 아바타
+summary: 사람 · 조직을 나타내는 동그란 사진 또는 머리글자
+use: 사람 줄의 앞 · 머리의 내 계정 · 담당자 표시. 사진이 없으면 이름 첫 글자
+class: ds-avatar
+template: '<span class="{class}"{attrs}>김</span>'
+props:
+  size: { vocab: size, values: [sm, md, lg], default: md }
+no-states: true
+slots:
+  image: { class: ds-avatar__image, optional: true, note: 'img — alt 에 이름' }
+a11y: 사진이면 img alt 에 이름, 장식이면 alt=""
+review: { status: draft }

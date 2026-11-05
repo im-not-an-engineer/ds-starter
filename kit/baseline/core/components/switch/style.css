@@ -1,0 +1,8 @@
+.ds-switch { display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); min-height: var(--size-touch); cursor: pointer; font: var(--text-body-1-size)/var(--text-body-1-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-switch__control { appearance: none; flex: none; position: relative; width: calc(var(--size-icon-md) * 2.2); height: var(--size-icon-lg); margin: 0; border-radius: var(--radius-full); background: var(--color-border-strong); cursor: pointer; transition: background var(--motion-duration-fast) var(--motion-easing-standard); }
+.ds-switch__control::after { content: ""; position: absolute; top: var(--space-2); left: var(--space-2); width: var(--size-icon-md); height: var(--size-icon-md); border-radius: var(--radius-full); background: var(--color-surface-default); box-shadow: var(--shadow-sm); transition: transform var(--motion-duration-fast) var(--motion-easing-standard); }
+.ds-switch__control:checked { background: var(--color-accent-solid); }
+.ds-switch__control:checked::after { transform: translateX(calc(var(--size-icon-md) * 2.2 - var(--size-icon-md) - var(--space-4))); }
+.ds-switch__control:focus-visible { outline: var(--border-width-strong) solid var(--color-focus); outline-offset: var(--space-2); }
+.ds-switch__control:disabled { background: var(--color-bg-muted); }
+.ds-switch:has(:disabled) { color: var(--color-fg-disabled); cursor: not-allowed; }

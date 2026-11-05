@@ -1,0 +1,15 @@
+title: 탭
+summary: 같은 자리의 내용을 몇 갈래로 바꿔 보는 줄
+use: 한 화면 안에서 2~5개의 보기를 오갈 때(전체 · 진행 중 · 완료). 고른 탭은 aria-selected
+avoid: 화면 사이를 옮겨 가는 것은 하단 탭 바 · 사이드바(프로필). 값을 고르는 것은 [[radio]]
+class: ds-tabs
+template: '<div class="{class}" role="tablist"><button class="ds-tabs__tab" role="tab" aria-selected="true">전체</button><button class="ds-tabs__tab" role="tab">진행 중</button><button class="ds-tabs__tab" role="tab">완료</button></div>'
+props:
+  fill: { type: boolean, class: -fill, note: 탭이 줄의 폭을 똑같이 나눔 — 모바일 }
+no-states: true
+slots:
+  tab: { class: ds-tabs__tab, note: '탭 하나 — 고른 것은 aria-selected="true", 수는 ds-tabs__count', modifiers: [] }
+  count: { class: ds-tabs__count, optional: true, note: 탭 이름 뒤 개수 }
+behavior: 누르면 같은 tablist 의 aria-selected 를 옮긴다(behavior.js)
+a11y: role=tablist · tab, 고른 것은 aria-selected="true"
+review: { status: draft }

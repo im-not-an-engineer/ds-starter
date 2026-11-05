@@ -1,0 +1,16 @@
+title: 상단 바
+summary: 화면 맨 위 — 왼쪽 뒤로 · 닫기, 가운데(또는 왼쪽) 제목, 오른쪽 행동 하나둘
+use:
+  - 다른 화면에서 들어온 화면은 왼쪽에 뒤로(-back), 아래에서 올라온 입력 화면은 오른쪽에 닫기
+  - 탭의 첫 화면은 뒤로 없이 -large(큰 제목)
+avoid: 행동을 셋 넘게 올리지 않는다 — 더보기(ds-icon -more) 하나로 모은다
+class: ds-app-bar
+template: '<header class="{class}"{attrs}><button class="ds-button -ghost -icon-only ds-app-bar__lead" aria-label="뒤로"><span class="ds-icon -back"></span></button><h1 class="ds-app-bar__title">화면 제목</h1><div class="ds-app-bar__actions"><button class="ds-button -ghost -icon-only" aria-label="더보기"><span class="ds-icon -more"></span></button></div></header>'
+props:
+  large: { type: boolean, class: -large, note: 큰 제목 — 탭의 첫 화면 }
+no-states: true
+slots:
+  lead: { class: ds-app-bar__lead, optional: true, note: '뒤로 · 닫기 — [[button]] -ghost -icon-only' }
+  title: { class: ds-app-bar__title, text: true }
+  actions: { class: ds-app-bar__actions, optional: true }
+review: { status: draft }

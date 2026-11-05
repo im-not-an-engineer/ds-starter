@@ -1,0 +1,17 @@
+title: 체크박스
+summary: 여럿을 골라 담거나 하나를 동의하는 네모 칸
+use: 여러 개를 함께 고를 때 · 「동의합니다」 처럼 한 항목을 켤 때(저장 버튼으로 반영)
+avoid: 누르는 즉시 켜지고 꺼지는 설정은 [[switch]]. 하나만 고르기는 [[radio]]
+class: ds-check
+template: '<label class="{class}"><input type="checkbox" class="ds-check__box"{attrs}><span class="ds-check__label">{label}</span></label>'
+label: 알림 받기
+states:
+  checked: { attr: checked, note: input 에 }
+  disabled: { attr: disabled, note: input 에 }
+  invalid: { attr: aria-invalid, value: 'true', note: input 에 — 꼭 고를 것을 안 고름 }
+  focus: { interaction: true }
+slots:
+  box: { class: ds-check__box, note: 'input type="checkbox"' }
+  label: { class: ds-check__label, text: true }
+a11y: label 로 감싸 글자를 눌러도 켜지게
+review: { status: draft }

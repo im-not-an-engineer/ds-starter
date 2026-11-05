@@ -1,0 +1,43 @@
+# 구성 문법 — 어느 화면에서든 따르는 구성의 약속. 보편 기준이고, 기준 화면을 들인 뒤 이 시스템의 값으로 고친다(작업 grammar).
+#   rule(지킬 것) · why(판단이 갈릴 때의 기준) · do · dont(예) · grade(fixed · product · screen) · check(기계 검사)
+grammar:
+  - id: G-hierarchy
+    title: 주인공 하나
+    rule: 화면마다 가장 중요한 것 하나가 가장 크고 진하다. 제목 단계는 둘까지(-title-1 하나 + 그 아래 하나)
+    why: 모든 것이 강조되면 아무것도 강조되지 않는다. 사용자는 1초 안에 이 화면이 무엇인지 알아야 한다
+    do: 현황 화면 — 핵심 숫자 하나를 -display, 나머지는 -body-2 · -caption
+    dont: 카드마다 -title-1 · 숫자 여럿을 모두 -display
+    grade: product
+    check: { max-count: { -title-1: 1, -display: 1 } }
+  - id: G-spacing-rhythm
+    title: 간격은 관계를 말한다
+    rule: 가까운 것은 좁게, 다른 묶음은 넓게. 한 묶음 안 8~12 · 묶음 사이 16~24 · 큰 덩어리 사이 32. 같은 관계에는 같은 간격
+    why: 간격이 일정하지 않으면 묶음이 읽히지 않는다. 선 · 상자를 더하기 전에 간격으로 먼저 나눈다
+    do: '[[stack]] -gap-24 로 묶음을 쌓고, 묶음 안은 -gap-8'
+    dont: 간격 대신 [[divider]] 를 줄마다 넣기 · 묶음마다 다른 간격
+    grade: product
+  - id: G-alignment
+    title: 왼쪽 정렬이 기본
+    rule: 글과 컨트롤은 왼쪽 정렬. 가운데 정렬은 안내 · 완료 · 빈 상태처럼 짧은 화면에만. 숫자 값은 오른쪽 정렬(목록의 끝 · 표)
+    why: 왼쪽 정렬은 시선의 시작점을 하나로 만든다
+    grade: product
+  - id: G-density
+    title: 밀도는 대상에 맞춘다
+    rule: 모바일은 줄 높이 44 이상 · 화면 가장자리 16, 데스크톱 업무 화면은 조밀하게(-sm 컨트롤 허용). 한 화면 안에서 밀도를 섞지 않는다
+    why: 손가락은 커서보다 크다. 같은 화면에서 밀도가 섞이면 덜 중요한 것이 더 커 보인다
+    grade: product
+  - id: G-emphasis
+    title: 강조 색은 적게
+    rule: 강조 면(accent solid)은 주 행동 하나와 켜진 상태 표시에만. 장식으로 강조 색 · 상태 색을 칠하지 않는다
+    why: 강조 색이 많으면 주 행동이 묻힌다. 상태 색은 뜻(성공 · 오류)이 있을 때만 읽힌다
+    grade: product
+  - id: G-grouping
+    title: 묶음은 제목으로 시작한다
+    rule: 세 개 넘는 항목의 묶음은 짧은 제목(-title-3 또는 [[list]] __header)으로 시작한다. 카드는 내용이 덩어리일 때만
+    why: 제목 없는 묶음은 무엇의 모음인지 짐작하게 만든다
+    grade: screen
+  - id: G-actions-place
+    title: 행동은 정해진 자리에
+    rule: 화면 전체의 행동은 화면 틀의 __footer(모바일은 아래 고정, 데스크톱은 머리 오른쪽). 묶음의 작은 행동은 그 묶음 제목 오른쪽 -ghost -sm
+    why: 행동의 자리가 화면마다 다르면 사용자는 매번 찾는다
+    grade: product

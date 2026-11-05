@@ -1,0 +1,14 @@
+title: 앱 틀
+summary: 왼쪽 사이드바(제품 · 메뉴 · 계정) + 오른쪽 일하는 판. 데스크톱 화면의 가장 바깥
+use: 모든 데스크톱 화면의 가장 바깥 — 판 안에 [[page]] 를 둔다. 지금 메뉴는 aria-current="page"
+avoid: 로그인 · 안내 · 완료처럼 메뉴가 필요 없는 화면은 [[page]] -center 만
+class: ds-shell
+template: '<div class="{class}"{attrs}><aside class="ds-shell__sidebar"><div class="ds-shell__brand">제품 이름</div><nav class="ds-shell__nav"><a class="ds-shell__item" href="#" aria-current="page"><span class="ds-icon -info"></span>홈</a><a class="ds-shell__item" href="#"><span class="ds-icon -search"></span>찾기</a></nav></aside><div class="ds-shell__main">판</div></div>'
+no-states: true
+slots:
+  sidebar: { class: ds-shell__sidebar }
+  brand: { class: ds-shell__brand, text: true }
+  nav: { class: ds-shell__nav }
+  item: { class: ds-shell__item, note: '메뉴 하나 — 아이콘 + 이름, 지금 화면은 aria-current="page"' }
+  main: { class: ds-shell__main, note: '일하는 판 — [[page]] 를 넣는다' }
+review: { status: draft }

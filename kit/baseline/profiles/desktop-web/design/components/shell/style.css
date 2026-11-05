@@ -1,0 +1,9 @@
+.ds-shell { display: flex; height: 100%; background: var(--color-bg-canvas); font-family: var(--font-family-base); }
+.ds-shell__sidebar { flex: none; width: calc(var(--space-64) * 3.5); display: flex; flex-direction: column; gap: var(--space-16); padding: var(--space-16) var(--space-12); border-right: var(--border-width-default) solid var(--color-border-subtle); background: var(--color-surface-default); }
+.ds-shell__brand { padding: 0 var(--space-8); font: var(--font-weight-semibold) var(--text-title-3-size)/var(--text-title-3-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-shell__nav { display: flex; flex-direction: column; gap: var(--space-2); }
+.ds-shell__item { display: flex; align-items: center; gap: var(--space-8); height: var(--size-control-md); padding: 0 var(--space-8); border-radius: var(--radius-md); color: var(--color-fg-muted); font-size: var(--text-body-2-size); text-decoration: none; }
+.ds-shell__item:hover { background: var(--color-surface-hover); }
+.ds-shell__item[aria-current="page"] { background: var(--color-surface-selected); color: var(--color-accent-fg); font-weight: var(--font-weight-semibold); }
+.ds-shell__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ds-shell__main > .ds-page { flex: 1; }

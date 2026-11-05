@@ -1,0 +1,2 @@
+# 진행 상태 — npm run ds -- progress <작업> <todo|doing|blocked|done|skipped> [--note "…"] 로 고친다. 작업 목록은 kit/tasks.yaml
+progress: {}

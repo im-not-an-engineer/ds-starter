@@ -1,0 +1,31 @@
+# 문구 · 표기 — 말투 · 버튼 이름 · 숫자 · 날짜 · 오류와 빈 상태의 글. 보편 기준이고, 제품의 말투로 고친다.
+grammar:
+  - id: G-copy-tone
+    title: 말투
+    rule: 해요체. 짧게 — 한 문장은 한 줄 안에. 사용자를 탓하지 않는다
+    do: 저장했어요 · 이메일을 확인해 주세요
+    dont: 저장이 완료되었습니다 · 잘못된 입력입니다
+    grade: product
+  - id: G-copy-button
+    title: 버튼은 행동 이름
+    rule: 버튼 글은 일어나는 행동의 동사(저장 · 삭제 · 다음 · 보내기). 「확인」 · 「예」 처럼 무엇이 일어나는지 모를 이름을 쓰지 않는다
+    why: 버튼만 읽고도 무엇이 일어날지 알아야 한다 — 특히 되돌릴 수 없는 행동
+    grade: product
+  - id: G-copy-numbers
+    title: 숫자 · 단위
+    rule: 천 단위 쉼표, 단위는 붙여 쓴다(9,000원 · 12건 · 80%). 비교는 「지난달보다 3,000원 적게」 처럼 방향을 말로
+    grade: product
+  - id: G-copy-dates
+    title: 날짜 · 시간
+    rule: 오늘 · 어제는 말로, 그 밖은 11월 5일(올해) · 2025년 11월 5일(다른 해). 시간은 오후 2:30
+    grade: product
+  - id: G-copy-error
+    title: 오류 문구
+    rule: 무엇이 틀렸고 어떻게 고치나를 한 문장으로. 칸 아래([[field]] __error)에 두고, 화면 전체 오류는 [[notice]] -danger
+    do: 이메일 형식이 아니에요. name@example.com 처럼 적어 주세요
+    dont: 오류가 발생했습니다 · 유효하지 않은 값
+    grade: product
+  - id: G-copy-empty
+    title: 빈 상태 문구
+    rule: 무엇이 비었나 + 다음에 할 일. 처음이라 비었으면 만들기를, 거른 결과가 비었으면 거르기 풀기를 권한다
+    grade: product

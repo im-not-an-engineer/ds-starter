@@ -1,0 +1,2 @@
+.ds-divider { margin: 0; border: 0; border-top: var(--border-width-default) solid var(--color-border-default); }
+.ds-divider.-thick { border-top: var(--space-8) solid var(--color-bg-subtle); }

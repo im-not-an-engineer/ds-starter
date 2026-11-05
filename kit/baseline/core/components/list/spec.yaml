@@ -1,0 +1,21 @@
+title: 목록
+summary: 같은 모양의 줄을 세로로 — 줄 하나 = 앞(아이콘 · 사진) · 내용(제목 · 보조) · 뒤(값 · 행동 · 화살표)
+use:
+  - 같은 종류가 반복되는 것(내역 · 사람 · 설정 항목 · 메뉴)
+  - 누르면 상세로 가는 줄은 a 또는 button 으로, 뒤에 화살표
+  - 묶음 머리(날짜 · 분류)는 __header
+avoid: 항목마다 모양 · 행동이 크게 다르거나 그림이 주인공이면 [[card]]. 값을 나란히 비교하면 표(데스크톱 프로필)
+class: ds-list
+template: '<div class="{class}"{attrs}><div class="ds-list__header">오늘</div><a class="ds-list__item" href="#"><span class="ds-list__body"><span class="ds-list__title">점심</span><span class="ds-list__meta">식비 · 12:30</span></span><span class="ds-list__end">9,000원</span></a></div>'
+props:
+  inset: { type: boolean, class: -inset, note: 둥근 면 안에 담음(카드처럼) — 설정 화면 }
+no-states: true
+slots:
+  header: { class: ds-list__header, optional: true, text: true, note: 묶음 머리 }
+  item: { class: ds-list__item, note: '줄 하나 — 누를 수 있으면 a · button. 고른 줄은 aria-current="true"', modifiers: [{ class: -chevron, note: 뒤에 이동 화살표 }] }
+  start: { class: ds-list__start, optional: true, note: '앞 — [[icon]] · [[avatar]]' }
+  body: { class: ds-list__body, note: 내용 — 제목과 보조 }
+  title: { class: ds-list__title, text: true }
+  meta: { class: ds-list__meta, optional: true, text: true, note: 보조 한 줄 — 분류 · 시간 }
+  end: { class: ds-list__end, optional: true, note: '뒤 — 값 · [[badge]] · [[switch]] · [[button]] -sm' }
+review: { status: draft }

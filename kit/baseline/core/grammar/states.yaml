@@ -1,0 +1,23 @@
+# 상태 처리 — 화면에 생길 수 있는 상태를 빠짐없이, 같은 방식으로. 화면 유형의 states 가 어떤 상태를 그릴지 정하고, 이 문법이 어떻게 그릴지 정한다.
+grammar:
+  - id: G-state-empty
+    title: 비어 있음
+    rule: 내용 자리에 [[empty]] 하나 — 화면 틀 · 머리 · 행동은 그대로 둔다. 표 · 목록의 머리를 지우지 않는다
+    grade: product
+  - id: G-state-loading
+    title: 불러오는 중
+    rule: 처음 불러올 때는 내용 자리의 모양을 회색 면으로(뼈대), 1초 안이면 아무것도 보이지 않아도 된다. 버튼을 누른 뒤 처리는 그 버튼의 aria-busy
+    why: 화면 전체를 도는 표시로 덮으면 무엇이 오는지 모른다
+    grade: product
+  - id: G-state-error
+    title: 오류
+    rule: 못 불러왔으면 내용 자리에 [[notice]] -danger 와 「다시 시도」. 칸의 오류는 그 칸 아래. 오류를 빈 상태처럼 보이지 않는다
+    grade: product
+  - id: G-state-disabled
+    title: 못 하는 것
+    rule: 지금 할 수 없는 행동은 숨기지 않고 비활성(disabled) — 왜 못 하는지를 가까이에 한 줄로. 권한이 없어 영영 못 하면 숨긴다
+    grade: product
+  - id: G-state-no-access
+    title: 권한 없음
+    rule: 화면 전체를 볼 권한이 없으면 [[empty]] 처럼 가운데에 이유와 「요청하기」 같은 다음 행동
+    grade: product

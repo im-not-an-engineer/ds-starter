@@ -1,0 +1,6 @@
+# 그림 — 기준 화면(키스크린) · 컴포넌트 그림. src 는 이 파일 기준 경로.
+#   kind     key-screen(기준 화면) · component(컴포넌트 그림) · mood(분위기)
+#   see      보이는 것(그림을 열지 않아도 알 수 있게) · learn 이 그림에서 따라야 할 것(밀도 · 위계 · 여백 · 배치 — 글 · 데이터가 아니다)
+#   applies  이 그림이 보여 주는 항목 — ["[[P-list]]", "[[card]]"]
+#   figma    피그마 노드 링크 · figma-check: pending(캡처로 넣어 피그마로 다시 볼 것)
+images: []

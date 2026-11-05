@@ -1,0 +1,9 @@
+.ds-progress { display: flex; align-items: center; gap: var(--space-8); }
+.ds-progress__bar { flex: 1; appearance: none; height: var(--space-6); border: 0; border-radius: var(--radius-full); background: var(--color-bg-muted); overflow: hidden; color: var(--color-accent-solid); }
+.ds-progress__bar::-webkit-progress-bar { background: var(--color-bg-muted); }
+.ds-progress__bar::-webkit-progress-value { background: currentColor; border-radius: var(--radius-full); }
+.ds-progress__bar::-moz-progress-bar { background: currentColor; border-radius: var(--radius-full); }
+.ds-progress.-success .ds-progress__bar { color: var(--color-status-success-solid); }
+.ds-progress.-warning .ds-progress__bar { color: var(--color-status-warning-solid); }
+.ds-progress.-danger .ds-progress__bar { color: var(--color-status-danger-solid); }
+.ds-progress__label { flex: none; font-size: var(--text-caption-size); line-height: var(--text-caption-line); color: var(--color-fg-muted); }

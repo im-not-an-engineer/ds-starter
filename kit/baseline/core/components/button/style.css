@@ -1,0 +1,22 @@
+.ds-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-6); height: var(--size-control-md); padding: 0 var(--space-16); border: var(--border-width-default) solid var(--color-border-default); border-radius: var(--radius-md); background: var(--color-surface-default); color: var(--color-fg-default); font: var(--font-weight-medium) var(--text-body-2-size)/var(--text-body-2-line) var(--font-family-base); white-space: nowrap; cursor: pointer; text-decoration: none; transition: background var(--motion-duration-fast) var(--motion-easing-standard); }
+.ds-button:hover { background: var(--color-surface-hover); }
+.ds-button:active { background: var(--color-surface-pressed); }
+.ds-button:focus-visible { outline: var(--border-width-strong) solid var(--color-focus); outline-offset: var(--space-2); }
+.ds-button.-primary { background: var(--color-accent-solid); border-color: var(--color-accent-solid); color: var(--color-fg-on-solid); }
+.ds-button.-primary:hover { background: var(--color-accent-solid-hover); }
+.ds-button.-primary:active { background: var(--color-accent-solid-pressed); }
+.ds-button.-secondary { background: var(--color-surface-default); }
+.ds-button.-ghost { background: transparent; border-color: transparent; color: var(--color-accent-fg); }
+.ds-button.-ghost:hover { background: var(--color-surface-hover); }
+.ds-button.-danger { background: var(--color-status-danger-solid); border-color: var(--color-status-danger-solid); color: var(--color-fg-on-solid); }
+.ds-button.-sm { height: var(--size-control-sm); padding: 0 var(--space-12); }
+.ds-button.-lg { height: var(--size-control-lg); padding: 0 var(--space-20); font-size: var(--text-body-1-size); }
+.ds-button.-block { display: flex; width: 100%; }
+.ds-button.-icon-only { width: var(--size-control-md); padding: 0; }
+.ds-button.-icon-only.-sm { width: var(--size-control-sm); }
+.ds-button.-icon-only.-lg { width: var(--size-control-lg); }
+.ds-button:disabled { background: var(--color-bg-muted); border-color: var(--color-bg-muted); color: var(--color-fg-disabled); cursor: not-allowed; }
+.ds-button[aria-busy="true"] { color: transparent; pointer-events: none; position: relative; }
+.ds-button[aria-busy="true"]::after { content: ""; position: absolute; width: var(--size-icon-sm); height: var(--size-icon-sm); border-radius: var(--radius-full); border: var(--border-width-strong) solid var(--color-fg-muted); border-top-color: transparent; animation: ds-spin 0.8s linear infinite; }
+.ds-button__icon { display: inline-flex; }
+@keyframes ds-spin { to { transform: rotate(360deg); } }

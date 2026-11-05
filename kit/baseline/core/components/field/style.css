@@ -1,0 +1,5 @@
+.ds-field { display: flex; flex-direction: column; gap: var(--space-6); }
+.ds-field__label { font: var(--font-weight-medium) var(--text-body-2-size)/var(--text-body-2-line) var(--font-family-base); color: var(--color-fg-default); }
+.ds-field__required { color: var(--color-status-danger-fg); margin-left: var(--space-2); }
+.ds-field__hint { margin: 0; font-size: var(--text-caption-size); line-height: var(--text-caption-line); color: var(--color-fg-muted); }
+.ds-field__error { margin: 0; font-size: var(--text-caption-size); line-height: var(--text-caption-line); color: var(--color-status-danger-fg); }
