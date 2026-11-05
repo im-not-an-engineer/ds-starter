@@ -83,9 +83,10 @@ collections:
     what: 화면 한 장이 하는 일의 종류. 사용자의 주된 일로 하나를 고른다. 맞는 것이 없으면 P-free.
     how: |
       job(주된 일) · fits(이럴 때) · avoid(이럴 땐 아니다)로 고른다. needs-facts 의 사실을 먼저 확인한다(모르면 그 사실의 if-unknown).
-      고른 뒤 template(HTML 골격)을 출발점으로 regions 를 채우고, states 를 모두 그린다.
+      고른 뒤 template(HTML 골격)을 출발점으로 regions 를 채우고, states 를 모두 그린다. 상태를 그릴 재료는 상태 처리 문법이 가리킨다.
+      basis 는 이 유형의 기준 화면([[K-…]]) — 있으면 그 그림의 「배울 것」 을 따른다.
     line: "{title} — {job}"
-    fields: [title, job, fits, avoid, needs-facts, template, regions, states, primary-action, note]
+    fields: [title, job, fits, avoid, needs-facts, template, regions, states, primary-action, basis, note]
     require: [job, fits, template, states]
     load: { judge: always, draw: on-demand }
 

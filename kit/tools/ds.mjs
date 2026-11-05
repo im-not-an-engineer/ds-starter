@@ -5,6 +5,7 @@
 //   ds progress <작업> <상태> [--note "…"]   상태 적기 (todo · doing · blocked · done · skipped)
 //   ds baseline [--profile <ID>]     보편 기준을 design/ 에 깐다 (한 번). --diff 는 깐 뒤 무엇을 고쳤나
 //   ds icons list <세트> [찾을 말] · add <세트> <이름…> · import <폴더>   아이콘 들이기 (세트: lucide · tabler · phosphor · heroicons · material)
+//   ds figma outline <저장한 get_metadata 결과> [--depth 2] [--type frame,section]   피그마 구조의 첫 목록
 //   ds build                         값 → CSS 변수, 컴포넌트 CSS · 동작 묶기, 키트 · 피그마 대응 → build/
 //   ds check [화면.html …]           원천 검사. 화면을 주면 계약 검사(지어낸 클래스 · 엉뚱한 변형 · 짜임 · 속성)와 문법 검사
 //   ds map                           빈칸 지도 — 칸마다 채워진 정도와, 지금 생성하면 에이전트가 짐작할 곳
@@ -24,6 +25,7 @@ import { loadComponents, indexOf, checkComponent, checkContract, matrix, figmaSp
 import { idIndex, refsIn, checkImages, checkRules, bodyOf, imagePath } from './lib/guidance.mjs';
 import { evaluate, setProgress } from './lib/progress.mjs';
 import { SETS, listIcons, addIcons, importIcons } from './lib/icons.mjs';
+import { outline } from './lib/figma.mjs';
 
 const KIT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const KIT_VERSION = existsSync(path.join(KIT, 'VERSION')) ? readFileSync(path.join(KIT, 'VERSION'), 'utf8').trim() : '0.0.0';
@@ -40,10 +42,10 @@ for (let i = 1; i < argv.length; i++) {
 }
 const root = path.resolve(flags.root ?? process.cwd());
 
-const COMMANDS = { status, progress, baseline, icons, build, check, map: blankMap, context, preview, serve };
+const COMMANDS = { status, progress, baseline, icons, figma, build, check, map: blankMap, context, preview, serve };
 async function main() {
   if (COMMANDS[cmd]) return COMMANDS[cmd]();
-  console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).slice(0, 16).map((l) => l.slice(3)).join('\n'));
+  console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).slice(0, 17).map((l) => l.slice(3)).join('\n'));
   return cmd && cmd !== 'help' ? 1 : 0;
 }
 
@@ -191,6 +193,16 @@ function icons() {
   return 0;
 }
 
+// ── figma ──
+function figma() {
+  const [sub, file] = rest;
+  if (sub !== 'outline' || !file) throw new DsError('ds figma outline <get_metadata 결과를 저장한 파일> [--depth 2] [--type frame,section,component]');
+  const rows = outline(path.resolve(file), { depth: Number(flags.depth ?? 2), types: flags.type ? String(flags.type).split(',') : null });
+  for (const r of rows) console.log(`${'  '.repeat(r.level)}${r.tag} ${r.id} 「${r.name}」${r.w ? ` ${Math.round(r.w)}×${Math.round(r.h)}` : ''}`);
+  console.log(`\n${rows.length}개 — 깊이 ${flags.depth ?? 2}. 더 보려면 그 노드 ID 로 get_metadata 를 다시 부른다`);
+  return 0;
+}
+
 // ── build ──
 function build() {
   const g = gather();
@@ -220,7 +232,7 @@ const CHROME = `
 .dskit .meta{color:#666;margin:0 0 8px}.dskit .sw{display:inline-block;width:14px;height:14px;border:1px solid #ccc;vertical-align:middle}
 .dskit .stage{border:1px dashed #ccc;padding:16px;margin:8px 0;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
 .dskit .cell{display:flex;flex-direction:column;gap:4px}.dskit .cell>small{color:#888;font:11px ui-monospace,monospace}
-.dskit-frames{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+.dskit-frames{display:flex;gap:24px;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
 .dskit-frame{border:1px solid #bbb;overflow:auto;background:#fff;flex:none}.dskit-frame>img{display:block;width:100%}
 .dskit-cap{font:12px system-ui;color:#555;margin:0 0 4px}.dskit .badge{font:11px system-ui;border:1px solid #ccc;border-radius:4px;padding:0 4px;margin-left:6px;color:#666}`;
 
@@ -409,7 +421,13 @@ function context() {
       '- 컴포넌트에 없는 것이 필요하면 있는 클래스로 모양만 그리고 그 요소에 `data-local="<이름>"` 을 단다. 클래스를 지어내지 않는다.',
       '- 다 그린 뒤 `npm run ds -- check <파일>` 로 검사한다.', '');
   }
-  const pickedText = project.collections.filter((col) => col.kind === 'guidance').flatMap((col) => col.items.filter((it) => want.includes(String(it.id))).map((it) => JSON.stringify(it))).join('\n');
+  // related 의 근거 — 고른 항목과 그 골격 HTML, 그리고 이 세션에 늘 읽히는 지침(상태 · 구성 문법 · 규칙 …)이 가리키는 것.
+  // 상태 문법이 [[empty]] 를 가리키면 빈 상태 컴포넌트도 실린다 — 화면의 상태를 그릴 재료가 빠지지 않게
+  const guideCols = project.collections.filter((col) => col.kind === 'guidance');
+  const pickedItems = guideCols.flatMap((col) => col.items.filter((it) => want.includes(String(it.id))));
+  const alwaysItems = guideCols.filter((col) => loadFor(col, session) === 'always').flatMap((col) => col.items);
+  const tplText = pickedItems.filter((it) => it.template && existsSync(path.join(project.designDir, it.template))).map((it) => readFileSync(path.join(project.designDir, it.template), 'utf8'));
+  const pickedText = [...pickedItems, ...alwaysItems].map((it) => JSON.stringify(it)).concat(tplText).join('\n');
   const vocabAlways = project.vocab && session === 'draw';
   if (vocabAlways) {
     S.push('## 어휘 — 컴포넌트가 함께 쓰는 변형 이름', '');

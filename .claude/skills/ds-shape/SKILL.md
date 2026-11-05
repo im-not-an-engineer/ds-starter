@@ -34,6 +34,8 @@ npm run check && npm run map && npm run status
 
 ## 4. 아이콘을 들인다 (graphics)
 
+이 작업은 `ds.config.yaml` 의 `icons.source` 를 정하면(own · lucide …) 끝난다 — `progress graphics done` 으로는 바뀌지 않는다. 디자이너의 답을 기다리면 `progress graphics blocked --note …`.
+
 ```bash
 npm install --save-dev lucide-static           # 오픈소스면 그 세트의 패키지(도구가 이름을 알려 준다)
 npm run ds -- icons list lucide <찾을 말>
@@ -41,7 +43,7 @@ npm run ds -- icons add lucide <이름…>          # 피그마 · 기준 화면
 npm run ds -- icons import <자체 SVG 폴더>       # 자체 세트
 ```
 
-아이콘은 한 색으로 다시 칠하는 mask 방식이다. 여러 색 SVG 는 경고가 뜬다 — 그건 그림 부품으로.
+아이콘은 한 색으로 다시 칠하는 mask 방식이다. 피그마 SVG 의 판 전체 배경 사각형은 도구가 걷어 낸다. 여러 색 SVG 는 경고가 뜬다 — 그건 [[illustration]] 으로(`ds-figma`).
 기준 아이콘(check · close · plus · search · chevron · info · alert · more · back)이 세트의 모양과 다르면 같은 이름으로 세트의 것을 덮어 넣는다.
 
 ## 하지 않는 것

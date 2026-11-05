@@ -1,0 +1,12 @@
+title: 그림
+summary: 일러스트 · 3D 그림 · 여러 색 그림 하나 — 그림 파일이 곧 변형이다
+use: 빈 상태 · 안내 · 완료 화면의 큰 그림, 카드 · 타일의 장식 그림. 그림 하나에 변형 하나(-<이름>)
+avoid: 한 색으로 다시 칠하는 기호는 [[icon]]. 뜻을 전하는 그림이면 aria-label, 장식이면 aria-hidden
+class: ds-illust
+template: '<span class="{class}" role="img" aria-label="빈 상자"{attrs}></span>'
+props:
+  art: { values: [empty], default: empty, class: '-{value}', note: '그림 — 더하는 법: 파일(SVG · PNG 2배)을 이 폴더에 두고 values 에 이름을 더하고 style.css 에 .ds-illust.-<이름> { background-image: url("<파일>"); } 한 줄' }
+  size: { vocab: size, values: [sm, md, lg], default: md, note: sm 48 · md 64 · lg 화면 폭의 절반 }
+no-states: true
+a11y: 뜻이 있으면 role="img" + aria-label, 장식이면 aria-hidden="true"
+review: { status: draft }

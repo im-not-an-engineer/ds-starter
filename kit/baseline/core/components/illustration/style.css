@@ -1,0 +1,4 @@
+.ds-illust { display: inline-block; flex: none; width: var(--space-64); height: var(--space-64); background: center / contain no-repeat; }
+.ds-illust.-sm { width: var(--space-48); height: var(--space-48); }
+.ds-illust.-lg { width: 50%; height: auto; aspect-ratio: 1; }
+.ds-illust.-empty { background-image: url("empty.svg"); }

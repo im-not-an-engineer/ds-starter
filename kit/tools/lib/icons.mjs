@@ -1,6 +1,6 @@
 // 아이콘 들이기 — 자체 SVG 폴더(import) 또는 오픈소스 세트(add)에서, 쓸 것만 아이콘 컴포넌트의 변형으로.
 // 아이콘은 한 가지 색으로 다시 칠할 수 있게 mask 로 쓴다(색 = 둘러싼 글자색). 여러 색 그림 · 일러스트는 아이콘이 아니라 그림 부품(url)으로.
-import { existsSync, readFileSync, writeFileSync, readdirSync, copyFileSync, appendFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, readdirSync, appendFileSync } from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
 import { DsError } from './load.mjs';
@@ -43,7 +43,13 @@ function addToIconComponent(designDir, entries, source) {
     if (/fill="(?!none|currentColor)[^"]+"[\s\S]*fill="(?!none|currentColor)[^"]+"/.test(svg) && new Set([...svg.matchAll(/(?:fill|stroke)="(#[0-9a-fA-F]{3,8})"/g)].map((m) => m[1].toLowerCase())).size > 1) {
       console.log(`△ ${name}: 여러 색 SVG 입니다 — 아이콘(한 색)으로 넣으면 색이 사라집니다. 그림이면 그림 부품으로 넣으세요`);
     }
-    copyFileSync(file, path.join(dir, `${name}.svg`));
+    // 피그마에서 내보낸 SVG 는 판 전체를 덮는 배경 사각형(칩 · 버튼의 면)을 갖고 오기도 한다 — mask 로 쓰면 네모로 칠해지므로 걷어 낸다
+    const vb = (svg.match(/viewBox="([^"]+)"/)?.[1] ?? '').split(/[\s,]+/).map(Number);
+    const full = (r) => { const w = Number(r.match(/\swidth="([\d.]+)"/)?.[1]); const h = Number(r.match(/\sheight="([\d.]+)"/)?.[1]); const x = Number(r.match(/\sx="([\d.-]+)"/)?.[1] ?? 0); const y = Number(r.match(/\sy="([\d.-]+)"/)?.[1] ?? 0); return vb.length === 4 && x <= vb[0] && y <= vb[1] && w >= vb[2] && h >= vb[3]; };
+    let cleaned = svg;
+    for (const r of svg.match(/<rect\b[^>]*\/?>(?:\s*<\/rect>)?/g) ?? []) if (full(r) && !/fill="none"/.test(r)) cleaned = cleaned.replace(r, '');
+    if (cleaned !== svg) console.log(`△ ${name}: 판 전체를 덮는 배경 사각형을 걷어 냈습니다`);
+    writeFileSync(path.join(dir, `${name}.svg`), cleaned);
     if (!have.has(name)) { values.add(name); have.add(name); appendFileSync(path.join(dir, 'style.css'), `.ds-icon.-${name} { mask-image: url("${name}.svg"); }\n`); added.push(name); }
   }
   const sources = doc.get('sources') ?? doc.createNode([]);

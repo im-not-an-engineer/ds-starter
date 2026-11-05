@@ -1,0 +1,11 @@
+title: 칸 나눔
+summary: 같은 크기의 칸 여럿을 가로로 나눠 놓고 줄이 넘치면 다음 줄로 — 두 칸 · 세 칸 타일
+use: 짧은 숫자 카드 · 바로가기 타일처럼 같은 무게의 덩어리를 나란히. 칸 수는 -cols-2 · -cols-3
+avoid: 한 줄의 이름 ↔ 값 · 버튼 둘은 [[row]]. 길이가 다른 내용을 나란히 두지 않는다(모바일은 두 칸까지)
+class: ds-grid
+template: '<div class="{class}"{attrs}><div class="ds-card"><span class="ds-text -caption -tone-muted">진행</span><span class="ds-text -title-2">3건</span></div><div class="ds-card"><span class="ds-text -caption -tone-muted">완료</span><span class="ds-text -title-2">12건</span></div></div>'
+props:
+  cols: { values: ['2', '3', '4'], default: '2', class: '-cols-{value}', note: 칸 수 }
+  gap: { values: ['8', '12', '16'], default: '12', class: '-gap-{value}' }
+no-states: true
+review: { status: draft }

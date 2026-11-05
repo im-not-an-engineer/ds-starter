@@ -6,7 +6,7 @@ class: ds-empty
 template: '<div class="{class}"{attrs}><p class="ds-empty__title">아직 기록이 없어요</p><p class="ds-empty__text">첫 기록을 남겨 보세요.</p><button class="ds-button -primary">기록하기</button></div>'
 no-states: true
 slots:
-  art: { class: ds-empty__art, optional: true, note: 그림 하나(시스템의 그림 부품) }
+  art: { class: ds-empty__art, optional: true, note: '그림 하나 — [[illustration]] 을 넣는다' }
   title: { class: ds-empty__title, text: true, note: 무엇이 비었나 }
   text: { class: ds-empty__text, optional: true, text: true, note: 다음에 할 일 }
 review: { status: draft }

@@ -50,7 +50,13 @@ export function evaluate({ root, kitDir, config, designDir }) {
     'figma-verify': () => (pending.length ? 'todo' : saved['figma-connect']?.status === 'done' ? 'done' : 'todo'),
   };
   const state = new Map();
-  for (const t of tasks) state.set(t.id, { ...t, status: t.auto ? auto[t.auto]() : saved[t.id]?.status ?? 'todo', note: saved[t.id]?.note, date: saved[t.id]?.date });
+  const statusOf = (t) => {
+    if (!t.auto) return saved[t.id]?.status ?? 'todo';
+    const a = auto[t.auto]();
+    // 내용으로 판정하는 작업도 막힘 · 건너뜀은 적은 대로 — 끝나면(done) 그것이 이긴다
+    return a !== 'done' && ['blocked', 'skipped'].includes(saved[t.id]?.status) ? saved[t.id].status : a;
+  };
+  for (const t of tasks) state.set(t.id, { ...t, status: statusOf(t), note: saved[t.id]?.note, date: saved[t.id]?.date });
   for (const t of state.values()) {
     if (t.status === 'done' || t.status === 'skipped') continue;
     const missing = (t.needs ?? []).filter((n) => !['done', 'skipped'].includes(state.get(n)?.status));
@@ -66,6 +72,9 @@ export function setProgress(root, kitDir, id, status, note) {
   const tasks = loadTasks(kitDir);
   if (!tasks.some((t) => t.id === id)) throw new DsError(`작업 ${id} 가 없습니다 — ${tasks.map((t) => t.id).join(' · ')}`);
   if (!STATUSES.includes(status)) throw new DsError(`상태는 ${STATUSES.join(' · ')} 중 하나`);
+  const task = tasks.find((t) => t.id === id);
+  const AUTO_HINT = { shape: 'ds.config.yaml 의 description 과 profile 을 채우면', baseline: 'npm run ds -- baseline 으로 기준을 깔면', graphics: 'ds.config.yaml 의 icons.source 를 정하면(own · lucide …)', 'figma-verify': 'figma-check: pending 이 없고 figma-connect 가 done 이면' };
+  if (task.auto && ['done', 'todo', 'doing'].includes(status)) throw new DsError(`${id} 는 내용으로 판정하는 작업이라 상태를 적어도 바뀌지 않습니다 — ${AUTO_HINT[task.auto] ?? '내용을 채우면'} done 이 됩니다(막힘 · 건너뜀만 적을 수 있다)`);
   const p = readProgress(root);
   p[id] = { status, ...(note ? { note } : {}), date: new Date().toISOString().slice(0, 10) };
   writeProgress(root, p);

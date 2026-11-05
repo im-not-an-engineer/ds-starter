@@ -13,8 +13,14 @@ export function readYaml(file) {
   try {
     return YAML.parse(readFileSync(file, 'utf8')) ?? {};
   } catch (e) {
-    const hint = /\[\[/.test(readFileSync(file, 'utf8')) && /flow|Missing , or :/.test(e.message)
-      ? ' — [ ] · { } 안에 [[ID]] 가 있으면 그 글을 따옴표로 감쌉니다: ["비어 있음 — [[empty]]"]' : '';
+    const text = readFileSync(file, 'utf8');
+    const line = text.split('\n')[(e.linePos?.[0]?.line ?? 0) - 1] ?? '';
+    const hints = [];
+    if (/\[\[/.test(line) || (/\[\[/.test(text) && /flow|Missing , or :/.test(e.message))) hints.push('[ ] · { } 안에 [[ID]] 가 있으면 그 글을 따옴표로 감쌉니다: ["비어 있음 — [[empty]]"]');
+    // 오류 위치는 대개 원인보다 뒤를 가리킨다 — { } 안에서 따옴표 밖의 「 #」 이 있는 줄을 파일 전체에서 찾는다
+    const hashLines = text.split('\n').map((l, i) => [i + 1, l]).filter(([, l]) => !/^\s*#/.test(l) && /\{[^}]*\s#/.test(l.replace(/'[^']*'|"[^"]*"/g, '')));
+    if (hashLines.length) hints.push(`{ } 안의 「 #」 은 YAML 주석이 됩니다(색 #33343680 · 번호 #1 …) — 그 글을 따옴표로 감쌉니다. 원인 줄: ${hashLines.slice(0, 3).map(([n, l]) => `${n}행 ${l.trim().slice(0, 60)}`).join(' / ')}`);
+    const hint = hints.length ? ` — ${hints.join(' / ')}` : '';
     throw new DsError(`${file} 를 읽지 못했습니다 — ${e.message.split('\n')[0]}${hint}`);
   }
 }

@@ -33,12 +33,14 @@ npm run ds -- context --session draw --ids <decision.md 마지막 줄의 ID> --o
 
 새 서브에이전트에게:
 
-> `draw.md` · `request.md` · `decision.md` 만 읽는다. 다른 파일(design/ 원천 · kit/ · 다른 work/)은 열지 않는다. 그림 파일은 지침이 가리키면 열어 본다.
+> `draw.md` · `request.md` · `decision.md` 만 읽는다. 원천 파일(design/ · kit/ · 다른 work/)은 열지 않는다. 그림 파일은 지침이 가리키면 열어 본다.
+> draw.md 에 목록으로만 있는 항목의 본문이 필요하면 `npm run ds -- context --session draw --ids <ID>` 로 더 읽어도 된다 — 더 읽은 ID 와 이유를 notes.md 에 적는다(그것이 지침의 빈틈이다).
 > 고른 화면 유형의 **골격 HTML 에서 출발**해 regions 를 채운다. 상태마다 파일 하나 — `<작업>/<화면>-<상태>.html`(HTML 조각, html · head 없이).
 > `npm run ds -- check <작업>/*.html` 이 통과할 때까지 고친다.
 > `<작업>/notes.md` — 고른 것과 근거 · 가정한 것 · **지침에 없어서 짐작한 것(빠짐없이, 번호 목록, 각각 어느 칸 — 읽는 법 · 값 · 어휘 · 컴포넌트 · 문법 · 판단 · 그림 · 규칙 — 의 빈틈인지)** · data-local 을 단 곳.
 
-지침이 너무 크면(3만 자 넘게) 지도에서 컴포넌트 묶음의 `load` 를 `{ judge: index, draw: related }` 로 바꾸자고 제안한다 — 고른 화면 유형이 가리키는 컴포넌트만 싣는다.
+지침이 너무 크면(3만 자 넘게) 지도에서 컴포넌트 묶음의 `load` 를 `{ judge: index, draw: related }` 로 바꾸자고 제안한다 — 고른 화면 유형과 그 골격,
+그리고 늘 읽히는 문법(상태 처리 · 구성)과 규칙이 가리키는 컴포넌트만 본문으로 싣는다. 바꾼 뒤 draw.md 에 빈 상태 · 안내처럼 상태를 그릴 컴포넌트가 실렸는지 한 번 본다.
 
 ## 3. 보기
 
